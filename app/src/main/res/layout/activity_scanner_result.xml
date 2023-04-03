@@ -90,6 +90,17 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_ad"
+        android:layout_width="match_parent"
+        android:layout_height="264dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_share">
+
+    </androidx.cardview.widget.CardView>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_share"
         android:layout_width="134dp"

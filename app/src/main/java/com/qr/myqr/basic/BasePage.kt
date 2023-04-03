@@ -17,8 +17,8 @@ abstract class BasePage : AppCompatActivity() {
 //resources.displayMetrics.density
     private fun setDensity() {
         val metrics: DisplayMetrics = resources.displayMetrics
-        val td = metrics.heightPixels / 760f
-        val dpi = (160 * td).toInt()
+        val td = metrics.heightPixels / 812f
+        val dpi = (375 * td).toInt()
         metrics.density = td
         metrics.scaledDensity = td
         metrics.densityDpi = dpi
