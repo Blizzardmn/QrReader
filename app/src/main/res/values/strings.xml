@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">QR Reader</string>
+    <string name="qr_reader">QR Reader</string>
+    <string name="start_scan">Start Scan</string>
+    <string name="result">Result</string>
+    <string name="the_scanned_qr_code_content">The scanned QR code content</string>
+    <string name="create">Create</string>
+    <string name="wi_fi_name_ssid">Wi-Fi Name (SSID)</string>
+    <string name="input_ssid">input ssid…</string>
+    <string name="input_password">input password…</string>
+    <string name="password">Password</string>
+    <string name="mode">Mode</string>
+    <string name="mpa_wpa2">WPA2/WPA3</string>
+    <string name="wep">WEP</string>
+    <string name="none">NONE</string>
+    <string name="input">input..</string>
+    <string name="input_number">input number…</string>
+    <string name="phone_number">Phone number</string>
+    <string name="username">Username</string>
+    <string name="url">Url</string>
+    <string name="wpa">WPA</string>
+    <string name="facebook_id">Facebook Id</string>
+    <string name="scan">Scan</string>
+    <string name="create_result">Create Result</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="copy_success">Copy content successful</string>
+    <string name="input_content_tips">Please input content</string>
+    <string name="save_failed">Saved failed</string>
+    <string name="save_success">Saved to album</string>
+</resources>

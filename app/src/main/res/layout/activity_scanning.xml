@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/preview_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_scanner_bg" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="43dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_gallery"
+        android:layout_width="25dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_gallery"
+        app:layout_constraintLeft_toLeftOf="@id/iv_back"
+        app:layout_constraintTop_toBottomOf="@id/iv_back" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_code_re"
+        android:layout_width="193dp"
+        android:layout_height="193dp"
+        android:layout_marginTop="105dp"
+        android:background="@drawable/ic_sacnner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_gallery" />
+        
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_light"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/ic_light_close"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_code_re"
+        android:layout_width="21dp"
+        android:layout_height="31dp"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_scanning_animator"
+        android:layout_width="190dp"
+        android:layout_height="3dp"
+        android:background="@drawable/ic_scanner_line"
+        app:layout_constraintLeft_toLeftOf="@id/iv_code_re"
+        app:layout_constraintRight_toRightOf="@id/iv_code_re"
+        app:layout_constraintTop_toTopOf="@id/iv_code_re" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

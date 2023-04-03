@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.MainActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ic_bg_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:layout_marginLeft="-10dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginRight="-10dp"
+            android:background="@drawable/ic_main_top" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="26dp"
+        android:gravity="center"
+        android:text="@string/qr_reader"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_history"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginHorizontal="16dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_history"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintRight_toRightOf="@id/tv_title"
+        app:layout_constraintTop_toTopOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_scanner_bg"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginHorizontal="13dp"
+        android:background="@drawable/ic_scan_bg"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/start_scan"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/iv_scanner_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_scanner_bg" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_scan"
+        android:layout_width="27dp"
+        android:layout_height="25dp"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_home_scanner"
+        app:layout_constraintRight_toRightOf="@id/iv_scanner_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_scanner_bg" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:paddingHorizontal="7.5dp"
+        app:layout_constraintBottom_toTopOf="@id/card_ad"
+        app:layout_constraintTop_toBottomOf="@id/ic_bg_top" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_ad"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="15dp"
+        android:visibility="gone"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

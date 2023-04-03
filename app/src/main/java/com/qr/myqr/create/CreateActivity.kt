@@ -1,0 +1,81 @@
+package com.qr.myqr.create
+
+import android.os.Bundle
+import android.widget.Toast
+import com.qr.myqr.R
+import com.qr.myqr.basic.BaseInputFragment
+import com.qr.myqr.basic.BasePage
+import com.qr.myqr.databinding.ActivityCreateQrBinding
+import com.qr.myqr.db.CreateEntity
+import com.qr.myqr.db.RoomImpl
+import com.qr.myqr.main.UiBean
+import com.qr.myqr.toActivity
+
+class CreateActivity : BasePage() {
+    private val daoCreate by lazy { RoomImpl.createDao }
+    override val viewBinding by lazy { ActivityCreateQrBinding.inflate(layoutInflater) }
+    private lateinit var uiBean: UiBean
+    private lateinit var inputContent: InputContent
+
+    override fun initView() {
+        uiBean = intent.getSerializableExtra("bean") as UiBean
+        viewBinding.run {
+            icBack.setOnClickListener { onBackPressed() }
+            ivType.setImageResource(uiBean.icon)
+            tvTitle.text = uiBean.name
+            createBtn.setOnClickListener {
+                val content = inputContent.getContent()
+                if (content.isEmpty()) {
+                    Toast.makeText(
+                        this@CreateActivity,
+                        getString(R.string.input_content_tips),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                } else {
+                    toCreateResultActivity(content)
+                }
+            }
+            initFragment()
+        }
+    }
+
+    private fun initFragment() {
+        when (uiBean.icon) {
+            R.drawable.ic_wifi -> {
+                commitFragment(WiFiInputFragment())
+            }
+            R.drawable.ic_tel, R.drawable.ic_wathsapp -> {
+                commitFragment(PhoneFragment())
+            }
+            R.drawable.ic_tiktok, R.drawable.ic_ins, R.drawable.ic_twitter, R.drawable.ic_pay, R.drawable.ic_facebook -> {
+                commitFragment(UrlFragment(uiBean))
+            }
+            else -> {
+                commitFragment(InputTextFragment())
+            }
+        }
+    }
+
+    private fun commitFragment(fragment: BaseInputFragment) {
+        inputContent = fragment
+        supportFragmentManager.beginTransaction().replace(R.id.fragment, fragment).commitNow()
+    }
+
+    private fun toCreateResultActivity(s: String) {
+        val bean = daoCreate.getScanEntityByType(uiBean.type.ordinal)
+        if (bean == null) {
+            daoCreate.add(CreateEntity().apply {
+                type = uiBean.type.ordinal
+                content = s
+            })
+        } else {
+            bean.content = s
+            daoCreate.update(bean)
+        }
+        toActivity<CreateResultActivity>(bundle = Bundle().apply {
+            putString("content", s)
+        })
+        finish()
+    }
+}
