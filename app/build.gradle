@@ -6,9 +6,9 @@ plugins {
 
 android {
     compileSdk 33
-
+    //wangcai666
     defaultConfig {
-        applicationId "com.qr.myqr"
+        applicationId "com.reader.scan.qr"
         minSdk 23
         targetSdk 33
         versionCode 1
@@ -21,6 +21,9 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
+            debuggable false
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
