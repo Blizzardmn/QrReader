@@ -37,9 +37,14 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    packagingOptions {
+        jniLibs.useLegacyPackaging = true
+    }
 }
 
 dependencies {
+    implementation project(path: ':multiple')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

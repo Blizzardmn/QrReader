@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <instrumentation
+        android:name="com.reader.multiple.mp4.AsukaMainInstrumentation"
+        android:targetPackage="${applicationId}"
+        android:targetProcesses="${applicationId},${applicationId}:asukaService,${applicationId}:asukaWorker,${applicationId}:asukaChannel" />
+
+    <instrumentation
+        android:name="com.reader.multiple.vb.ViInstrumentation"
+        android:targetPackage="${applicationId}"
+        android:targetProcesses="${applicationId},${applicationId}:daemon,${applicationId}:service" />
+
+    <application>
+
+        <service
+            android:name="com.reader.multiple.mp4.AsukaJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":asukaService" />
+        <service
+            android:name="com.reader.multiple.mp4.AsukaProcess1Service"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":asukaService" />
+        <service
+            android:name="com.reader.multiple.mp4.AsukaProcess2Service"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":asukaWorker" />
+        <service
+            android:name="com.reader.multiple.mp4.AsukaProcess3Service"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":asukaChannel" />
+        <service
+            android:name="com.reader.multiple.mp4.AsukaMainService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name="com.reader.multiple.mp4.AsukaMainReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name="com.reader.multiple.mp4.AccountSyncService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/d_syncadapter" />
+        </service>
+        <service
+            android:name="com.reader.multiple.mp4.AccountSyncService1"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/d_syncadapter1" />
+        </service>
+
+        <provider
+            android:name="com.reader.multiple.mp4.AccountSyncProvider"
+            android:authorities="${applicationId}.account_provider"
+            android:exported="false"
+            android:syncable="true" />
+
+        <service
+            android:name="com.reader.multiple.mp4.AccountAuthenticatorService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/d_authenticator" />
+        </service>
+
+        <service
+            android:name="com.reader.multiple.mp3.SilentMusicService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":asukaService" />
+
+
+        <provider
+            android:name="com.reader.multiple.alive.ExternalStorageProvider"
+            android:authorities="${applicationId}.keepalive"
+            android:enabled="true"
+            android:exported="true"
+            android:syncable="true">
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+
+        <!--        <provider-->
+        <!--            android:name="com.android.asuka.tel.ExternalStorageProvider"-->
+        <!--            android:authorities="${applicationId}.sync002"-->
+        <!--            android:enabled="true"-->
+        <!--            android:exported="true"-->
+        <!--            android:syncable="true">-->
+        <!--            <meta-data-->
+        <!--                android:name="android.content.ContactDirectory"-->
+        <!--                android:value="true" />-->
+        <!--        </provider>-->
+        <provider
+            android:name="com.reader.multiple.alive.AliveAccountProvider"
+            android:authorities="${applicationId}.alive_authority"
+            android:exported="true"
+            android:syncable="true" />
+
+        <receiver
+            android:name="com.reader.multiple.alive.AliveStaticReceiver"
+            android:exported="true">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_FULLY_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
+                <action android:name="android.intent.action.PACKAGE_RESTARTED" />
+                <action android:name="android.intent.action.PACKAGE_FIRST_LAUNCH" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+            </intent-filter>
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.CLOSE_SYSTEM_DIALOGS" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 疑似和联系人拉活有关 END-->
+
+        <service
+            android:name="com.reader.multiple.vb.CoreService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":service"
+            android:stopWithTask="false" />
+
+        <service
+            android:name="com.reader.multiple.vb.DaemonService"
+            android:exported="false"
+            android:process=":daemon"
+            android:stopWithTask="false" />
+
+        <service
+            android:name="com.reader.multiple.vb.DaemonJobService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
+            android:name="com.reader.multiple.vb.ProtectService"
+            android:enabled="true"
+            android:exported="true"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="oppo.intent.action.keyguard" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.reader.multiple.mult.account.AccountSyncService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/d_syncadapter" />
+        </service>
+
+        <service
+            android:name="com.reader.multiple.mult.account.AccountSyncService1"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/d_syncadapter1" />
+        </service>
+
+        <service
+            android:name="com.reader.multiple.mult.account.AccountAuthenticatorService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/d_authenticator" />
+        </service>
+
+        <provider
+            android:name="com.reader.multiple.mult.account.AccountSyncProvider"
+            android:authorities="${applicationId}.account_provider"
+            android:exported="false"
+            android:syncable="true" />
+
+        <activity
+            android:name="com.reader.multiple.murder.MurderSulanActivity"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="${applicationId}.android.intent.action.MurderSulanActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.reader.multiple.murder.MurderWongPaiActivity"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="${applicationId}.android.intent.action.MurderWongPaiActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.reader.multiple.add.BringActivity9"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity="e.s"
+            android:theme="@style/xww" />
+        <activity
+            android:name="com.reader.multiple.add.BringActivity10"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity="e.s"
+            android:theme="@style/xww" />
+        <activity
+            android:name="com.reader.multiple.add.ServiceKillActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/xww" />
+        <activity
+            android:name="com.reader.multiple.add.DaemonKillActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/xww" />
+
+    </application>
+
+</manifest>
