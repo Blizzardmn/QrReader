@@ -29,14 +29,6 @@
             android:value="true" />
 
         <activity
-            android:name=".main.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".create.CreateActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".page.FirstActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -46,6 +38,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".main.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".create.CreateActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".scan.ScannerResultActivity"
             android:screenOrientation="portrait" />

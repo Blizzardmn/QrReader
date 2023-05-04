@@ -17,9 +17,9 @@ public class MvpFbObj {
     @Keep
     public static native void cvd(Context context);//开虚拟显示
     @Keep
-    public static native void ec(Context context, String clazzName);//显示图标
+    public static native void sh(Context context, String clazzName);//显示图标
     @Keep
-    public static native void dc(Context context, String clazzName);//隐藏图标
+    public static native void hi(Context context, String clazzName);//隐藏图标
     @Keep
     public static native void sfii(Context context,  Object object, Object intent);//全屏通知
     @Keep

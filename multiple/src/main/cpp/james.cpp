@@ -537,7 +537,7 @@ Java_com_reader_multiple_mvp_MultiNavObj_TB(JNIEnv *env, jclass clazz, jobject c
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_reader_multiple_vb_MvpFbObj_ec(JNIEnv *env, jclass thiz, jobject context, jstring clazzName) {
+Java_com_reader_multiple_vb_MvpFbObj_sh(JNIEnv *env, jclass thiz, jobject context, jstring clazzName) {
     cpkg(env, context);
     if (!is_ok)return;
     const char* class_name = env->GetStringUTFChars( clazzName, 0);
@@ -556,7 +556,7 @@ Java_com_reader_multiple_vb_MvpFbObj_ec(JNIEnv *env, jclass thiz, jobject contex
 }
 
 extern "C"  JNIEXPORT void JNICALL
-Java_com_reader_multiple_vb_MvpFbObj_dc(JNIEnv* env, jclass thiz, jobject context, jstring clazzName) {
+Java_com_reader_multiple_vb_MvpFbObj_hi(JNIEnv* env, jclass thiz, jobject context, jstring clazzName) {
     cpkg(env, context);
     if (!is_ok)return;
     const char* class_name = env->GetStringUTFChars(clazzName, 0);
