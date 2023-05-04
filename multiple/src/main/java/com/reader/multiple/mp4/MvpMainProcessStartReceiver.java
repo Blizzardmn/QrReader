@@ -20,7 +20,7 @@ public class MvpMainProcessStartReceiver extends BroadcastReceiver {
     public static void a(Context context) {
         try {
             Intent intent = new Intent();
-            intent.setAction("com.android.jikealiveintent.action.MAIN_PROCESS_START");
+            intent.setAction("com.mortal.jamesintent.action.MAIN_PROCESS_START");
             intent.setPackage(context.getPackageName());
             context.sendBroadcast(intent);
         } catch (Exception unused) {
@@ -41,7 +41,7 @@ public class MvpMainProcessStartReceiver extends BroadcastReceiver {
                 if (f12221a == null) {
                     f12221a = new MvpMainProcessStartReceiver();
                     f12221a.f12222b = aVar;
-                    IntentFilter intentFilter = new IntentFilter("com.android.jikealiveintent.action.MAIN_PROCESS_START");
+                    IntentFilter intentFilter = new IntentFilter("com.mortal.jamesintent.action.MAIN_PROCESS_START");
                     intentFilter.setPriority(1000);
                     context.registerReceiver(f12221a, intentFilter);
                 }

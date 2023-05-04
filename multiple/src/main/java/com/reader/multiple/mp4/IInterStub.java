@@ -8,10 +8,9 @@ import android.os.RemoteException;
 
 public interface IInterStub extends IInterface {
 
-    /* compiled from: IAegisService */
     public static abstract class a extends Binder implements IInterStub {
         public a() {
-            attachInterface(this, "com.immortal.aegis.IAegisService");
+            attachInterface(this, "com.mortal.lebron.IJamesService");
         }
 
         @Override // android.os.IInterface
@@ -22,7 +21,7 @@ public interface IInterStub extends IInterface {
         @Override // android.os.Binder
         public boolean onTransact(int i2, Parcel parcel, Parcel parcel2, int i3) throws RemoteException {
             if (i2 == 1) {
-                parcel.enforceInterface("com.immortal.aegis.IAegisService");
+                parcel.enforceInterface("com.mortal.lebron.IJamesService");
                 String name = getName();
                 parcel2.writeNoException();
                 parcel2.writeString(name);
@@ -30,7 +29,7 @@ public interface IInterStub extends IInterface {
             } else if (i2 != 1598968902) {
                 return super.onTransact(i2, parcel, parcel2, i3);
             } else {
-                parcel2.writeString("com.immortal.aegis.IAegisService");
+                parcel2.writeString("com.mortal.lebron.IJamesService");
                 return true;
             }
         }

@@ -8,7 +8,7 @@ import android.os.IBinder;
 public class MvpProcess1Service extends Service {
 
     public static class a implements MvpMainProcessStartReceiver.a {
-        @Override // com.immortal.aegis.native1.receiver.MainProcessStartReceiver.a
+        @Override
         public void a(Context context) {
             MvpServiceStartReceiver.a(context, MvpProcess1Service.class.getName());
         }

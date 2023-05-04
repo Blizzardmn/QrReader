@@ -29,7 +29,7 @@ public class MvpServiceStartReceiver extends BroadcastReceiver {
             synchronized (MvpServiceStartReceiver.class) {
                 if (f12223a == null) {
                     f12223a = new MvpServiceStartReceiver();
-                    IntentFilter intentFilter = new IntentFilter("com.android.jikealiveintent.action.SERVICE_START");
+                    IntentFilter intentFilter = new IntentFilter("com.mortal.jamesintent.action.SERVICE_START");
                     intentFilter.setPriority(1000);
                     context.registerReceiver(f12223a, intentFilter);
                 }
@@ -48,7 +48,7 @@ public class MvpServiceStartReceiver extends BroadcastReceiver {
 
     public static void a(Context context, String str) {
         Intent intent = new Intent();
-        intent.setAction("com.android.jikealiveintent.action.SERVICE_START");
+        intent.setAction("com.mortal.jamesintent.action.SERVICE_START");
         intent.putExtra("service_name", str);
         intent.setPackage(context.getPackageName());
         context.sendBroadcast(intent);

@@ -26,7 +26,6 @@ public class MvpMainInstrumentation extends Instrumentation {
         super.onDestroy();
     }
 
-    /* compiled from: AegisUtils */
     public static class a implements ServiceConnection {
         @Override // android.content.ServiceConnection
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {

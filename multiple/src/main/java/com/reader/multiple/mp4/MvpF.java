@@ -41,14 +41,14 @@ public class MvpF {
             String str = this.f27370b;
             try {
                 MvpProcessAssist a2 = MvpManager.a();
-                MvpParcel aegisParcel = new MvpParcel();
-                aegisParcel.f12226a = strArr;
-                aegisParcel.f12229d = a2.b();
-                aegisParcel.f12230e = a2.a();
-                aegisParcel.f12228c = a2.c();
-                aegisParcel.f27371h = a2.h();//add
+                MvpParcel mvpParcel = new MvpParcel();
+                mvpParcel.f12226a = strArr;
+                mvpParcel.f12229d = a2.b();
+                mvpParcel.f12230e = a2.a();
+                mvpParcel.f12228c = a2.c();
+                mvpParcel.f27371h = a2.h();//add
                 // Log.w("DaemonLog","ff format->4444-->" + aegisParcel.f27371h.getComponent().getPackageName());
-                aegisParcel.f12227b = str;
+                mvpParcel.f12227b = str;
                 String[] strArr2 = new String[4];
                 String appProcessPath = "app_process";
                 String str2;
@@ -68,7 +68,7 @@ public class MvpF {
                 }
                 strArr2[0] = appProcessPath;//new File("/system/bin/app_process32").exists() ? "app_process32" : "app_process";
                 strArr2[1] = MvpEntry.class.getName();
-                strArr2[2] = aegisParcel.toString();
+                strArr2[2] = mvpParcel.toString();
                 strArr2[3] = str;
                 String format = String.format("%s / %s %s --application --nice-name=%s --daemon &", strArr2[0], strArr2[1], strArr2[2], strArr2[3]);
 //                Log.w("DaemonLog","format->1111-->" + "export CLASSPATH=$CLASSPATH:" + a2.f27353j);
@@ -101,16 +101,16 @@ public class MvpF {
             String a2 = a();
             try {
                 MvpProcessAssist a3 = MvpManager.a();
-                MvpParcel aegisParcel = new MvpParcel();
-                aegisParcel.f12226a = this.f27371a;
-                aegisParcel.f12229d = a3.b();
-                aegisParcel.f12230e = a3.a();
-                aegisParcel.f12228c = a3.c();
-                aegisParcel.f27371h = a3.h();//add
-                aegisParcel.f12227b = a2;
+                MvpParcel mvpParcel = new MvpParcel();
+                mvpParcel.f12226a = this.f27371a;
+                mvpParcel.f12229d = a3.b();
+                mvpParcel.f12230e = a3.a();
+                mvpParcel.f12228c = a3.c();
+                mvpParcel.f27371h = a3.h();//add
+                mvpParcel.f12227b = a2;
                 //Log.w("DaemonLog","ff format->4444-->" + aegisParcel.f27371h.getComponent().getPackageName());
                 //Log.w("DaemonLog","ff AsukaEntry.main");
-                MvpEntry.main(new String[]{aegisParcel.toString()});
+                MvpEntry.main(new String[]{mvpParcel.toString()});
             } catch (Exception unused) {
             }
             MvpF.f27368b = false;

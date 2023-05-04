@@ -90,8 +90,8 @@ public class MvpEntry {
         }
     }
 
-    public MvpEntry(MvpParcel aegisParcel) {
-        this.f12218h = aegisParcel;
+    public MvpEntry(MvpParcel mvpParcel) {
+        this.f12218h = mvpParcel;
     }
 
     public static void main(String[] strArr) {

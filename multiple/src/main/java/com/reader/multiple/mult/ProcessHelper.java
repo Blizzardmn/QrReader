@@ -40,16 +40,16 @@ public class ProcessHelper {
             setPriority(10);
             try {
                 ProcessAssist assist = MultiTrunk.getProcessAssist();
-                MvpParcel aegisParcel = new MvpParcel();
-                aegisParcel.f12226a = pathArr;
-                aegisParcel.f12229d = assist.getReceiverIntent();
-                aegisParcel.f12230e = assist.getInstruIntent();
-                aegisParcel.f12228c = assist.getServiceIntent();
-                aegisParcel.f12227b = processName;
+                MvpParcel mvpParcel = new MvpParcel();
+                mvpParcel.f12226a = pathArr;
+                mvpParcel.f12229d = assist.getReceiverIntent();
+                mvpParcel.f12230e = assist.getInstruIntent();
+                mvpParcel.f12228c = assist.getServiceIntent();
+                mvpParcel.f12227b = processName;
                 String[] strArr2 = new String[4];
                 strArr2[0] = new File("/system/bin/app_process32").exists() ? "app_process32" : "app_process";
                 strArr2[1] = MvpEntry.class.getName();
-                strArr2[2] = aegisParcel.toString();
+                strArr2[2] = mvpParcel.toString();
                 strArr2[3] = this.processName;
                 String format = String.format("%s / %s %s --application --nice-name=%s --daemon &", strArr2[0], strArr2[1], strArr2[2], strArr2[3]);
 //                Log.w("DaemonLog","format->1111-->" + "export CLASSPATH=$CLASSPATH:" + a2.f27353j);

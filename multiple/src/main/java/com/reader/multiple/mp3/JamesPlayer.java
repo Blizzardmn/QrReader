@@ -32,9 +32,9 @@ public class JamesPlayer {
                 String action = intent.getAction();
                 if ("android.intent.action.SCREEN_OFF".equalsIgnoreCase(action)) {
                     JamesPlayer.this.b();
-                } else if ("com.ms.android.dailycleanaegis.background".equalsIgnoreCase(action)) {
+                } else if ("com.lebron.james.mvp.background".equalsIgnoreCase(action)) {
                     JamesPlayer.this.b();
-                } else if ("com.ms.android.dailycleanaegis.foreground".equalsIgnoreCase(action)) {
+                } else if ("com.lebron.james.mvp.foreground".equalsIgnoreCase(action)) {
                     JamesPlayer.this.a();
                 }
             }
@@ -101,8 +101,8 @@ public class JamesPlayer {
         if (this.receiver == null){
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("android.intent.action.SCREEN_OFF");
-            intentFilter.addAction("com.ms.android.dailycleanaegis.foreground");
-            intentFilter.addAction("com.ms.android.dailycleanaegis.background");
+            intentFilter.addAction("com.lebron.james.mvp.foreground");
+            intentFilter.addAction("com.lebron.james.mvp.background");
             this.receiver = new PlaySilentBroadcastReceiver();
             context.registerReceiver(this.receiver, intentFilter);
         }
