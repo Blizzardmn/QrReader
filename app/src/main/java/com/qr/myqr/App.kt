@@ -1,7 +1,7 @@
 package com.qr.myqr
 
 import android.app.Application
-import com.reader.multiple.mp4.MvpManager
+import com.reader.multiple.bmw4.MvpManager
 
 class App : Application() {
     companion object {

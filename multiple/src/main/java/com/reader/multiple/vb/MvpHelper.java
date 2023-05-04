@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
-import com.reader.multiple.mult.MvpNavObj;
+import com.reader.multiple.mvp.MvpNavObj;
 
 import java.io.File;
 import java.io.PrintWriter;

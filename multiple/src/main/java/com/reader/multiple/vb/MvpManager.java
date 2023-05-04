@@ -2,7 +2,7 @@ package com.reader.multiple.vb;
 
 import android.content.Context;
 
-import com.reader.multiple.mult.MvpNavObj;
+import com.reader.multiple.mvp.MvpNavObj;
 
 import java.io.File;
 
@@ -70,7 +70,7 @@ public class MvpManager {
     }
 
     public void init(final Context context) {
-        if(!com.reader.multiple.mp4.MvpManager.bh()){
+        if(!com.reader.multiple.bmw4.MvpManager.bh()){
             return;
         }
         this.context = context;

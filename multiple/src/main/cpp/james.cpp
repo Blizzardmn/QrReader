@@ -58,7 +58,7 @@ void sub_25c9()
 //    }
 }
 extern "C" JNIEXPORT jint JNICALL
-Java_com_reader_multiple_mult_MvpNavObj_l(JNIEnv *env, jclass clazz, jstring path) {
+Java_com_reader_multiple_mvp_MvpNavObj_l(JNIEnv *env, jclass clazz, jstring path) {
     if (!is_ok)
         return 0;
 
@@ -81,12 +81,12 @@ Java_com_reader_multiple_mult_MvpNavObj_l(JNIEnv *env, jclass clazz, jstring pat
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_reader_multiple_mult_MvpNavObj_i(JNIEnv *env, jclass clazz, jobject context) {
+Java_com_reader_multiple_mvp_MvpNavObj_i(JNIEnv *env, jclass clazz, jobject context) {
     cpkg(env, context);
 }
 
 extern "C" JNIEXPORT jint JNICALL
-Java_com_reader_multiple_mult_MvpNavObj_s(JNIEnv *env, jclass clazz) {
+Java_com_reader_multiple_mvp_MvpNavObj_s(JNIEnv *env, jclass clazz) {
     if (!is_ok)return 0;
     setsid();
     return 1;
@@ -124,7 +124,7 @@ int lockFile(const char *a1) {
 }
 
 extern "C" JNIEXPORT jint JNICALL
-Java_com_reader_multiple_mult_MvpNavObj_w(JNIEnv *env, jclass clazz, jstring path) {
+Java_com_reader_multiple_mvp_MvpNavObj_w(JNIEnv *env, jclass clazz, jstring path) {
     if (!is_ok)
         return 0;
 
@@ -142,7 +142,7 @@ Java_com_reader_multiple_mult_MvpNavObj_w(JNIEnv *env, jclass clazz, jstring pat
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_reader_multiple_mult_MvpNavObj_ahead(JNIEnv *env, jclass clazz, jstring var1, jstring var2,
+Java_com_reader_multiple_mvp_MvpNavObj_ahead(JNIEnv *env, jclass clazz, jstring var1, jstring var2,
                                               jstring var3, jstring var4, jstring var5,
                                               jstring var6) {
     if (!is_ok)
@@ -214,7 +214,7 @@ void java_callback(JNIEnv *env) {
     if (!is_ok)
         return;
 
-    jclass cls = env->FindClass("com/reader/multiple/mult/MvpNavObj");
+    jclass cls = env->FindClass("com/reader/multiple/mvp/MvpNavObj");
     jmethodID cb_method = env->GetStaticMethodID(cls, "restartProcess", "()V");
     env->CallStaticVoidMethod(cls, cb_method);
 }
@@ -245,7 +245,7 @@ void do_daemon(JNIEnv *env, jclass clazz, char *indicator_self_path, char *indic
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_reader_multiple_mult_MvpNavObj_forkChild(JNIEnv *env, jclass clazz, jobject context,
+Java_com_reader_multiple_mvp_MvpNavObj_forkChild(JNIEnv *env, jclass clazz, jobject context,
                                                   jstring fork_name, jstring selfForkLockFile,
                                                   jstring selfForkWaitFile,
                                                   jstring selfForkIndicatorFile,
@@ -310,14 +310,14 @@ Java_com_reader_multiple_mult_MvpNavObj_forkChild(JNIEnv *env, jclass clazz, job
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_reader_multiple_mult_MvpNavObj_p(JNIEnv *env, jclass clazz, jobject intent) {
+Java_com_reader_multiple_mvp_MvpNavObj_p(JNIEnv *env, jclass clazz, jobject intent) {
     if (!is_ok)
         return;
 
     /**
     * 找到要调用的类
     */
-    jclass cls_util = env->FindClass("com/reader/multiple/mult/RomHelper");   //注意，这里的使用的斜杠而不是点
+    jclass cls_util = env->FindClass("com/reader/multiple/mvp/RomHelper");   //注意，这里的使用的斜杠而不是点
     if (cls_util == nullptr) {
         return;
     }
@@ -378,7 +378,7 @@ void startProcess(JNIEnv *env, const char *process_head, const char *entry_class
     param5 = strcats(param5, processName);
     param5 = strcats(param5, " --daemon &");
 
-    jclass cls = env->FindClass("com/reader/multiple/mult/MvpNavObj");
+    jclass cls = env->FindClass("com/reader/multiple/mvp/MvpNavObj");
     jmethodID sp_method = env->GetStaticMethodID(cls, "sp",
                                                  "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 
@@ -471,7 +471,7 @@ void TB_set_process_name(JNIEnv *env) {
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_reader_multiple_mult_MultiNavObj_TB(JNIEnv *env, jclass clazz, jobject context,
+Java_com_reader_multiple_mvp_MultiNavObj_TB(JNIEnv *env, jclass clazz, jobject context,
                                               jstring selfForkLockFile,
                                               jstring selfForkWaitFile,
                                               jstring selfForkIndicatorFile,
