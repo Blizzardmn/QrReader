@@ -7,13 +7,13 @@ import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
-import com.reader.multiple.mp4.AsukaAppCxt;
+import com.reader.multiple.mp4.MvpAppCtx;
 
 public class SilentMusicService extends Service {
 
     public PlaySilent f12210a;
 
-    public static void begin(AsukaAppCxt bVar){
+    public static void begin(MvpAppCtx bVar){
         if (TextUtils.equals(bVar.f27328c, bVar.f27330e)){
             Intent intent = new Intent(bVar.f27326a, SilentMusicService.class);
             try {

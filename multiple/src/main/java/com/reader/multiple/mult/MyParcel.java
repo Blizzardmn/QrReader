@@ -5,6 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Base64;
 
+import androidx.annotation.Keep;
+
+@Keep
 public class MyParcel implements Parcelable {
     public static final Parcelable.Creator<MyParcel> CREATOR = new CREATOR();
 

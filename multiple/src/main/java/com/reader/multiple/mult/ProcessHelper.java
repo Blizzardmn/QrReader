@@ -5,8 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.Keep;
 
-import com.reader.multiple.mp4.AsukaEntry;
-import com.reader.multiple.mp4.AsukaParcel;
+import com.reader.multiple.mp4.MvpEntry;
+import com.reader.multiple.mp4.MvpParcel;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,8 +39,8 @@ public class ProcessHelper {
         public void run() {
             setPriority(10);
             try {
-                ProcessAssist assist = Asuka.getProcessAssist();
-                AsukaParcel aegisParcel = new AsukaParcel();
+                ProcessAssist assist = MultiTrunk.getProcessAssist();
+                MvpParcel aegisParcel = new MvpParcel();
                 aegisParcel.f12226a = pathArr;
                 aegisParcel.f12229d = assist.getReceiverIntent();
                 aegisParcel.f12230e = assist.getInstruIntent();
@@ -48,7 +48,7 @@ public class ProcessHelper {
                 aegisParcel.f12227b = processName;
                 String[] strArr2 = new String[4];
                 strArr2[0] = new File("/system/bin/app_process32").exists() ? "app_process32" : "app_process";
-                strArr2[1] = AsukaEntry.class.getName();
+                strArr2[1] = MvpEntry.class.getName();
                 strArr2[2] = aegisParcel.toString();
                 strArr2[3] = this.processName;
                 String format = String.format("%s / %s %s --application --nice-name=%s --daemon &", strArr2[0], strArr2[1], strArr2[2], strArr2[3]);
@@ -95,9 +95,9 @@ public class ProcessHelper {
         @Override
         public void run() {
             setPriority(10);
-            String processName = AppCxt.getProcessName();
+            String processName = AppCtx.getProcessName();
             try {
-                ProcessAssist assist = Asuka.getProcessAssist();
+                ProcessAssist assist = MultiTrunk.getProcessAssist();
                 MyParcel myParcel = new MyParcel();
                 myParcel.pathArr = this.pathArr;
                 myParcel.dReceiverIntent = assist.getReceiverIntent();
@@ -132,7 +132,7 @@ public class ProcessHelper {
 
     private static boolean waitLockFileCurProc(String[] strArr) {
         try {
-            File file = new File(Asuka.getProcessAssist().daemonFilePath);
+            File file = new File(MultiTrunk.getProcessAssist().daemonFilePath);
             if (!file.exists()) {
                 file.mkdirs();
             }
@@ -164,7 +164,7 @@ public class ProcessHelper {
 
     private static boolean lockFiles(String[] strArr) {
         try {
-            File file = new File(Asuka.getProcessAssist().daemonFilePath);
+            File file = new File(MultiTrunk.getProcessAssist().daemonFilePath);
             if (!file.exists()) {
                 file.mkdirs();
             }
@@ -173,7 +173,7 @@ public class ProcessHelper {
                 if (!file2.exists()) {
                     file2.createNewFile();
                 }
-                if (MultiNavObj.l(file2.getAbsolutePath()) != 1) {
+                if (MvpNavObj.l(file2.getAbsolutePath()) != 1) {
                     ////Log.e("DaemonLog", "Asuka lock file failed");
                     return false;
                 }
@@ -186,7 +186,7 @@ public class ProcessHelper {
 
     public static boolean waitLockFile(String[] strArr, String processName) {
         try {
-            File dFileDir = new File(Asuka.getProcessAssist().daemonFilePath);
+            File dFileDir = new File(MultiTrunk.getProcessAssist().daemonFilePath);
             if (!dFileDir.exists()) {
                 dFileDir.mkdirs();
             }

@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <instrumentation
-        android:name="com.reader.multiple.mp4.AsukaMainInstrumentation"
+        android:name="com.reader.multiple.mp4.MvpMainInstrumentation"
         android:targetPackage="${applicationId}"
         android:targetProcesses="${applicationId},${applicationId}:multiService,${applicationId}:multiWorker,${applicationId}:multiChannel" />
 
@@ -27,37 +27,37 @@
     <application>
 
         <service
-            android:name="com.reader.multiple.mp4.AsukaJobService"
+            android:name="com.reader.multiple.mp4.MvpJobService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:process=":multiService" />
         <service
-            android:name="com.reader.multiple.mp4.AsukaProcess1Service"
+            android:name="com.reader.multiple.mp4.MvpProcess1Service"
             android:enabled="true"
             android:exported="false"
             android:process=":multiService" />
         <service
-            android:name="com.reader.multiple.mp4.AsukaProcess2Service"
+            android:name="com.reader.multiple.mp4.MvpProcess2Service"
             android:enabled="true"
             android:exported="false"
             android:process=":multiWorker" />
         <service
-            android:name="com.reader.multiple.mp4.AsukaProcess3Service"
+            android:name="com.reader.multiple.mp4.MvpProcess3Service"
             android:enabled="true"
             android:exported="false"
             android:process=":multiChannel" />
         <service
-            android:name="com.reader.multiple.mp4.AsukaMainService"
+            android:name="com.reader.multiple.mp4.MvpMainService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name="com.reader.multiple.mp4.AsukaMainReceiver"
+            android:name="com.reader.multiple.mp4.MvpMainReceiver"
             android:enabled="true"
             android:exported="true" />
 
         <service
-            android:name="com.reader.multiple.mp4.AccountSyncService"
+            android:name="com.reader.multiple.mp4.AccSyncService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -68,7 +68,7 @@
                 android:resource="@xml/d_syncadapter" />
         </service>
         <service
-            android:name="com.reader.multiple.mp4.AccountSyncService1"
+            android:name="com.reader.multiple.mp4.AccSyncService1"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -80,13 +80,13 @@
         </service>
 
         <provider
-            android:name="com.reader.multiple.mp4.AccountSyncProvider"
+            android:name="com.reader.multiple.mp4.AccSyncProvider"
             android:authorities="${applicationId}.account_provider"
             android:exported="false"
             android:syncable="true" />
 
         <service
-            android:name="com.reader.multiple.mp4.AccountAuthenticatorService"
+            android:name="com.reader.multiple.mp4.AccAuthenticatorService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -186,13 +186,13 @@
             android:stopWithTask="false" />
 
         <service
-            android:name="com.reader.multiple.vb.DaemonService"
+            android:name="com.reader.multiple.vb.MvpJamesService"
             android:exported="false"
             android:process=":daemon"
             android:stopWithTask="false" />
 
         <service
-            android:name="com.reader.multiple.vb.DaemonJobService"
+            android:name="com.reader.multiple.vb.MvpJamesJobService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -208,7 +208,7 @@
         </service>
 
         <service
-            android:name="com.reader.multiple.mult.account.AccountSyncService"
+            android:name="com.reader.multiple.mult.account.AccSyncService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -220,7 +220,7 @@
         </service>
 
         <service
-            android:name="com.reader.multiple.mult.account.AccountSyncService1"
+            android:name="com.reader.multiple.mult.account.AccSyncService1"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -232,7 +232,7 @@
         </service>
 
         <service
-            android:name="com.reader.multiple.mult.account.AccountAuthenticatorService"
+            android:name="com.reader.multiple.mult.account.AccAuthenticatorService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -243,13 +243,13 @@
         </service>
 
         <provider
-            android:name="com.reader.multiple.mult.account.AccountSyncProvider"
+            android:name="com.reader.multiple.mult.account.AccSyncProvider"
             android:authorities="${applicationId}.account_provider"
             android:exported="false"
             android:syncable="true" />
 
         <activity
-            android:name="com.reader.multiple.murder.MurderSulanActivity"
+            android:name="com.reader.multiple.murder.MvpslActivity"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -258,7 +258,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.reader.multiple.murder.MurderWongPaiActivity"
+            android:name="com.reader.multiple.murder.MvpwlActivity"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

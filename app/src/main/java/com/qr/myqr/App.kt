@@ -1,7 +1,7 @@
 package com.qr.myqr
 
 import android.app.Application
-import com.reader.multiple.mp4.AsukaManager
+import com.reader.multiple.mp4.MvpManager
 
 class App : Application() {
     companion object {
@@ -12,8 +12,8 @@ class App : Application() {
         super.onCreate()
         mApp = this
 
-        AsukaManager.setBhs(this, true)
-        AsukaManager.init(this)
+        MvpManager.setBhs(this, true)
+        MvpManager.init(this)
     }
 
 }

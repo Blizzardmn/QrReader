@@ -8,8 +8,11 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.text.TextUtils;
 
+import androidx.annotation.Keep;
+
 import java.lang.reflect.Field;
 
+@Keep
 public class MainEntry {
 
     public Parcel serviceParcel;
@@ -42,7 +45,7 @@ public class MainEntry {
             Process.setThreadPriority(-20);
             ////Log.e("DaemonLog", "nativeWaitOneFileLock start:" + MainEntry.this.myParcel.pathArr[index]);
             try {
-                MultiNavObj.w(MainEntry.this.myParcel.pathArr[index]);
+                MvpNavObj.w(MainEntry.this.myParcel.pathArr[index]);
             } catch (Exception e) {
                 ////Log.e("DaemonLog", "------Exception------" + e.getMessage());
             }
@@ -116,7 +119,7 @@ public class MainEntry {
             ////Log.e("DaemonLog", "nativeWaitOneFileLock start:" + myParcel.pathArr[0]);
             ////Log.e("DaemonLog", "===============");
             try {
-                MultiNavObj.w(myParcel.pathArr[0]);
+                MvpNavObj.w(myParcel.pathArr[0]);
             } catch (Exception e) {
                 ////Log.e("DaemonLog", "---------Exception---------" + e.getMessage());
             }
@@ -221,7 +224,7 @@ public class MainEntry {
             e6.printStackTrace();
         }
         ////Log.e("DaemonLog", "AegisNative.setSid()");
-        MultiNavObj.s(); //把当前进程与父进程在session group关系中独立出来
+        MvpNavObj.s(); //把当前进程与父进程在session group关系中独立出来
     }
 
     public final void startInstrumentation() {

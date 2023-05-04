@@ -15,13 +15,13 @@ project("own")
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-        multi
+        james
 
         # Sets the library as a shared library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        multi.cpp)
+        james.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -52,7 +52,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mllvm -sub -mllvm -sobf -ml
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        multi
+        james
 
         # Links the target library to the log library
         # included in the NDK.

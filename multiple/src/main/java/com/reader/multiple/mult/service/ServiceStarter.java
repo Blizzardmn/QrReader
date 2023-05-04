@@ -2,7 +2,7 @@ package com.reader.multiple.mult.service;
 
 import android.content.Context;
 
-import com.reader.multiple.mult.Asuka;
+import com.reader.multiple.mult.MultiTrunk;
 import com.reader.multiple.mult.ProcessAssist;
 import com.reader.multiple.mult.ServiceUtils;
 
@@ -12,7 +12,7 @@ public class ServiceStarter implements ProcessAssist.IStartService {
     public boolean start(Context context, String str) {
         Class<?> cls;
         try {
-            ProcessAssist assist = Asuka.getProcessAssist();
+            ProcessAssist assist = MultiTrunk.getProcessAssist();
             if (str.equals(assist.processOne)) {
                 cls = CleanerService.class;
             } else if (str.equals(assist.processTwo)) {

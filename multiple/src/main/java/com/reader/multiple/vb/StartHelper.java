@@ -85,7 +85,7 @@ public class StartHelper {
                 serviceParcel.writeInt(1);
             }
 
-            Class<?> serviceClass = DaemonHelper.f.get(context.getPackageName());
+            Class<?> serviceClass = MvpHelper.f.get(context.getPackageName());
             if (serviceClass == null) {
                 ////Log.e("DaemonLog", "initParcels service class is null");
                 return;
