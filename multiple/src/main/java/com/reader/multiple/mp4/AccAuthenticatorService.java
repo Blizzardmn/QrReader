@@ -7,17 +7,17 @@ import android.os.IBinder;
 public class AccAuthenticatorService extends Service {
 
     /* renamed from: a  reason: collision with root package name */
-    public MvpAccountAA f12207a;
+    public MvpAccountAA accountAA;
 
     @Override // android.app.Service
     public IBinder onBind(Intent intent) {
-        return this.f12207a.getIBinder();
+        return this.accountAA.getIBinder();
     }
 
     @Override // android.app.Service
     public void onCreate() {
         super.onCreate();
-        this.f12207a = new MvpAccountAA(getApplicationContext());
+        this.accountAA = new MvpAccountAA(getApplicationContext());
     }
 }
 

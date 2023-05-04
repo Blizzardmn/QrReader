@@ -9,7 +9,7 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class ExternalStorageProvider extends ContentProvider {
+public class ExternalStoreProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         //if((RomUtil.isVivo()) && (Build.VERSION.SDK_INT < 30))

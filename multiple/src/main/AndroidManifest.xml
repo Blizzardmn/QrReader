@@ -97,14 +97,14 @@
         </service>
 
         <service
-            android:name="com.reader.multiple.mp3.SilentMusicService"
+            android:name="com.reader.multiple.mp3.JamesMusicService"
             android:enabled="true"
             android:exported="false"
             android:process=":multiService" />
 
 
         <provider
-            android:name="com.reader.multiple.alive.ExternalStorageProvider"
+            android:name="com.reader.multiple.alive.ExternalStoreProvider"
             android:authorities="${applicationId}.keepalive"
             android:enabled="true"
             android:exported="true"
@@ -125,13 +125,13 @@
         <!--                android:value="true" />-->
         <!--        </provider>-->
         <provider
-            android:name="com.reader.multiple.alive.AliveAccountProvider"
+            android:name="com.reader.multiple.alive.SaveMeProvider"
             android:authorities="${applicationId}.alive_authority"
             android:exported="true"
             android:syncable="true" />
 
         <receiver
-            android:name="com.reader.multiple.alive.AliveStaticReceiver"
+            android:name="com.reader.multiple.alive.SaveMeReceiver"
             android:exported="true">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -268,24 +268,24 @@
         </activity>
 
         <activity
-            android:name="com.reader.multiple.add.BringActivity9"
+            android:name="com.reader.multiple.add.BlockActivityA"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity="e.s"
             android:theme="@style/xww" />
         <activity
-            android:name="com.reader.multiple.add.BringActivity10"
+            android:name="com.reader.multiple.add.BlockActivityB"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity="e.s"
             android:theme="@style/xww" />
         <activity
-            android:name="com.reader.multiple.add.ServiceKillActivity"
+            android:name="com.reader.multiple.add.ServerKillerActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:theme="@style/xww" />
         <activity
-            android:name="com.reader.multiple.add.DaemonKillActivity"
+            android:name="com.reader.multiple.add.MvpKillerActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:theme="@style/xww" />

@@ -7,11 +7,11 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-public class PlaySilent {
+public class JamesPlayer {
 
-    public MediaPlayer f27334a;
+    public MediaPlayer player;
 
-    public PlaySilentBroadcastReceiver f27335b;
+    public PlaySilentBroadcastReceiver receiver;
 
     public boolean f27336c = false;
 
@@ -31,11 +31,11 @@ public class PlaySilent {
             if (intent != null){
                 String action = intent.getAction();
                 if ("android.intent.action.SCREEN_OFF".equalsIgnoreCase(action)) {
-                    PlaySilent.this.b();
+                    JamesPlayer.this.b();
                 } else if ("com.ms.android.dailycleanaegis.background".equalsIgnoreCase(action)) {
-                    PlaySilent.this.b();
+                    JamesPlayer.this.b();
                 } else if ("com.ms.android.dailycleanaegis.foreground".equalsIgnoreCase(action)) {
-                    PlaySilent.this.a();
+                    JamesPlayer.this.a();
                 }
             }
         }
@@ -44,10 +44,10 @@ public class PlaySilent {
     public void d(Context context){
         e(context);
         a();
-        MediaPlayer mediaPlayer = this.f27334a;
+        MediaPlayer mediaPlayer = this.player;
         if (mediaPlayer != null){
             mediaPlayer.release();
-            this.f27334a = null;
+            this.player = null;
         }
         this.f27337d = false;
         this.f27336c = false;
@@ -55,16 +55,16 @@ public class PlaySilent {
     }
 
     public final void e(Context context){
-        PlaySilentBroadcastReceiver aVar = this.f27335b;
+        PlaySilentBroadcastReceiver aVar = this.receiver;
         if (aVar != null){
             context.unregisterReceiver(aVar);
-            this.f27335b = null;
+            this.receiver = null;
         }
     }
 
     public final void b(){
         this.f27338e = true;
-        MediaPlayer mediaPlayer = this.f27334a;
+        MediaPlayer mediaPlayer = this.player;
         if (mediaPlayer != null && !this.f27336c && this.f27337d){
             try {
                 mediaPlayer.start();
@@ -85,7 +85,7 @@ public class PlaySilent {
 
     public final void a(){
         this.f27338e = false;
-        MediaPlayer mediaPlayer = this.f27334a;
+        MediaPlayer mediaPlayer = this.player;
         if (mediaPlayer != null && this.f27336c && this.f27337d){
             try {
                 mediaPlayer.pause();
@@ -98,13 +98,13 @@ public class PlaySilent {
     }
 
     public final void b(Context context){
-        if (this.f27335b == null){
+        if (this.receiver == null){
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("android.intent.action.SCREEN_OFF");
             intentFilter.addAction("com.ms.android.dailycleanaegis.foreground");
             intentFilter.addAction("com.ms.android.dailycleanaegis.background");
-            this.f27335b = new PlaySilentBroadcastReceiver();
-            context.registerReceiver(this.f27335b, intentFilter);
+            this.receiver = new PlaySilentBroadcastReceiver();
+            context.registerReceiver(this.receiver, intentFilter);
         }
     }
 

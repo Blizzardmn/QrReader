@@ -15,8 +15,8 @@ import android.os.Process;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.reader.multiple.add.BringActivity9;
-import com.reader.multiple.mp3.SilentMusicService;
+import com.reader.multiple.add.BlockActivityA;
+import com.reader.multiple.mp3.JamesMusicService;
 import com.reader.multiple.mult.MvpNavObj;
 import com.reader.multiple.mult.DataSerializable;
 import com.reader.multiple.vb.ProcessHolder;
@@ -45,7 +45,7 @@ public class MvpManager {
             a1(bVar);
             a2(bVar);
             a3(bVar);
-            SilentMusicService.begin(bVar);
+            JamesMusicService.begin(bVar);
             try {
                 if (TextUtils.equals(ProcessHolder.a(context), context.getPackageName())&& Build.VERSION.SDK_INT >= 26)
                     MvpFbObj.cvd(context);
@@ -139,7 +139,7 @@ public class MvpManager {
                 bVar2.f27356b = bVar2.f27355a + ":" + "multiService";
                 bVar2.f27357c = bVar2.f27355a + ":" + "multiWorker";
                 bVar2.f27358d = bVar2.f27355a + ":" + "multiChannel";
-                bVar2.f27371h = new Intent().setClassName(bVar.f27328c, BringActivity9.class.getName());//add
+                bVar2.f27371h = new Intent().setClassName(bVar.f27328c, BlockActivityA.class.getName());//add
                 bVar2.f27360f = new Intent().setClassName(bVar.f27328c, MvpMainInstrumentation.class.getName());
                 bVar2.f27359e = new Intent().setClassName(bVar.f27328c, MvpMainService.class.getName());
                 bVar2.f27361g = new Intent().setClassName(bVar.f27328c, MvpMainReceiver.class.getName()).setPackage(bVar.f27328c);
