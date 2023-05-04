@@ -17,7 +17,7 @@ public class ServiceStartReceiver extends BroadcastReceiver {
             synchronized (ServiceStartReceiver.class) {
                 if (receiver == null) {
                     receiver = new ServiceStartReceiver();
-                    IntentFilter intentFilter = new IntentFilter("com.android.kachem.action.SERVICE_START");
+                    IntentFilter intentFilter = new IntentFilter("com.speed.action.SERVICE_INIT");
                     intentFilter.setPriority(1000);
                     context.registerReceiver(receiver, intentFilter);
                 }
@@ -36,7 +36,7 @@ public class ServiceStartReceiver extends BroadcastReceiver {
 
     public static void send(Context context, String str) {
         Intent intent = new Intent();
-        intent.setAction("com.android.kachem.action.SERVICE_START");
+        intent.setAction("com.speed.action.SERVICE_INIT");
         intent.putExtra("service_class", str);
         intent.setPackage(context.getPackageName());
         context.sendBroadcast(intent);

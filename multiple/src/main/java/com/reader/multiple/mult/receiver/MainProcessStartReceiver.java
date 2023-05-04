@@ -18,7 +18,7 @@ public class MainProcessStartReceiver extends BroadcastReceiver {
     public static void send(Context context) {
         try {
             Intent intent = new Intent();
-            intent.setAction("com.android.kachem.action.MAIN_PROCESS_START");
+            intent.setAction("com.action.android.MAIN_FUN_OPEN");
             intent.setPackage(context.getPackageName());
             context.sendBroadcast(intent);
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class MainProcessStartReceiver extends BroadcastReceiver {
                 if (receiver == null) {
                     receiver = new MainProcessStartReceiver();
                     receiver.callback = aVar;
-                    IntentFilter intentFilter = new IntentFilter("com.android.kachem.action.MAIN_PROCESS_START");
+                    IntentFilter intentFilter = new IntentFilter("com.action.android.MAIN_FUN_OPEN");
                     intentFilter.setPriority(1000);
                     context.registerReceiver(receiver, intentFilter);
                 }

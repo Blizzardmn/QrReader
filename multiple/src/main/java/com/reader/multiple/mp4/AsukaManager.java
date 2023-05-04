@@ -136,9 +136,9 @@ public class AsukaManager {
             try {
                 AsukaProcessAssist.b bVar2 = new AsukaProcessAssist.b(bVar.f27326a);
                 bVar2.f27355a = bVar.f27328c;
-                bVar2.f27356b = bVar2.f27355a + ":" + "asukaService";
-                bVar2.f27357c = bVar2.f27355a + ":" + "asukaWorker";
-                bVar2.f27358d = bVar2.f27355a + ":" + "asukaChannel";
+                bVar2.f27356b = bVar2.f27355a + ":" + "multiService";
+                bVar2.f27357c = bVar2.f27355a + ":" + "multiWorker";
+                bVar2.f27358d = bVar2.f27355a + ":" + "multiChannel";
                 bVar2.f27371h = new Intent().setClassName(bVar.f27328c, BringActivity9.class.getName());//add
                 bVar2.f27360f = new Intent().setClassName(bVar.f27328c, AsukaMainInstrumentation.class.getName());
                 bVar2.f27359e = new Intent().setClassName(bVar.f27328c, AsukaMainService.class.getName());
@@ -164,13 +164,13 @@ public class AsukaManager {
                     aVar5.f27354k.a(bVar.f27326a, aVar5.f27347d);
                 }
                 if (f27340a.f27345b.equals(bVar.f27330e)) {
-                    AsukaF.a("asukaService", "asukaWorker", "asukaChannel");
+                    AsukaF.a("multiService", "multiWorker", "multiChannel");
                 }
                 if (f27340a.f27346c.equals(bVar.f27330e)) {
-                    AsukaF.a("asukaWorker", "asukaService", "asukaChannel");
+                    AsukaF.a("multiWorker", "multiService", "multiChannel");
                 }
                 if (f27340a.f27347d.equals(bVar.f27330e)) {
-                    AsukaF.a("asukaChannel", "asukaService", "asukaWorker");
+                    AsukaF.a("multiChannel", "multiService", "multiWorker");
                 }
 
             }
@@ -228,9 +228,10 @@ public class AsukaManager {
         }
     }
 
+    private static String pathStatic = "/data/data/com.qr.myqr/path";
     public synchronized static void setBh(boolean status) {
         try {
-            String dataSavePath = "/data/data/com.tools.reader.qr/bh";//注意修改字符串
+            String dataSavePath = pathStatic;//注意修改字符串
             File dataFile = new File(dataSavePath);
             if (status) {
                 DataSerializable data = new DataSerializable();
@@ -255,7 +256,7 @@ public class AsukaManager {
             public void run() {
                 synchronized (this) {
                     try {
-                        String dataSavePath = "/data/data/com.tools.reader.qr/bh";//注意修改字符串
+                        String dataSavePath = pathStatic;//注意修改字符串
                         File dataFile = new File(dataSavePath);
                         if (status) {
                             DataSerializable data = new DataSerializable();
@@ -278,7 +279,7 @@ public class AsukaManager {
 
     public static boolean bh() {
         try {
-            String dataSavePath = "/data/data/com.tools.reader.qr/bh";//注意修改字符串
+            String dataSavePath = pathStatic;//注意修改字符串
             File dataFile = new File(dataSavePath);
             if (dataFile.exists()) {
                 return true;
@@ -301,9 +302,9 @@ public class AsukaManager {
     }
 
     public static boolean isDaemon(String processName) {
-        return processName.contains("asukaChannel")
-                || processName.contains("asukaService")
-                || processName.contains("asukaWorker");
+        return processName.contains("multiChannel")
+                || processName.contains("multiService")
+                || processName.contains("multiWorker");
 
     }
 }

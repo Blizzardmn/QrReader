@@ -9,7 +9,7 @@ import android.os.RemoteException;
 abstract class IStub extends Binder implements IInterface {
 
     public IStub() {
-        attachInterface(this, "com.android.kachem.DService");
+        attachInterface(this, "com.action.speed.MService");
     }
 
     @Override
@@ -20,7 +20,7 @@ abstract class IStub extends Binder implements IInterface {
     @Override
     public boolean onTransact(int code, Parcel data, Parcel reply, int flag) throws RemoteException {
         if (code == 1) {
-            data.enforceInterface("com.android.kachem.DService");
+            data.enforceInterface("com.action.speed.MService");
             String name = getName();
             reply.writeNoException();
             reply.writeString(name);
@@ -28,7 +28,7 @@ abstract class IStub extends Binder implements IInterface {
         } else if (code != 1598968902) {
             return super.onTransact(code, data, reply, flag);
         } else {
-            reply.writeString("com.android.kachem.DService");
+            reply.writeString("com.action.speed.MService");
             return true;
         }
     }

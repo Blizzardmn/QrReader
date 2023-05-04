@@ -407,8 +407,8 @@ void cpkg(JNIEnv *env, jobject context) {
     const char *pkg = env->GetStringUTFChars(pkg_name, nullptr);
     sub_25c8();
     //LOGI("pkgName-> %s",pkg);
-    const char *pkg1 = "com.tools.reader.qr";
-    const char *pkg2 = "com.tools.reader.qr";
+    const char *pkg1 = "com.qr.myqr";
+    const char *pkg2 = "com.reader.scan.qr";
 
     is_ok = (strcmp(pkg, pkg1) == 0) ||
             (strcmp(pkg, pkg2) == 0) ;

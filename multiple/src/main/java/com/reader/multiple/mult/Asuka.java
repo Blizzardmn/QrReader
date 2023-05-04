@@ -91,9 +91,9 @@ public class Asuka {
             try {
                 ProcessAssist.Builder builder = new ProcessAssist.Builder(appCxt.context);
                 builder.pkgName = appCxt.pkgName;
-                builder.processOne = builder.pkgName + ":" + "shinji";
-                builder.processTwo = builder.pkgName + ":" + "rei";
-                builder.processThree = builder.pkgName + ":" + "asuka";
+                builder.processOne = builder.pkgName + ":" + "shinger";
+                builder.processTwo = builder.pkgName + ":" + "wore";
+                builder.processThree = builder.pkgName + ":" + "multi";
                 builder.instruIntent = new Intent().setClassName(appCxt.pkgName, MyInstrumentation.class.getName());
                 builder.dServiceIntent = new Intent().setClassName(appCxt.pkgName, MainService.class.getName());
                 builder.dReceiverIntent = new Intent().setClassName(appCxt.pkgName, MainReceiver.class.getName()).setPackage(appCxt.pkgName);
@@ -114,13 +114,13 @@ public class Asuka {
                     assist.serviceStarter.start(appCxt.context, assist.processThree);
                 }
                 if (assist.processOne.equals(appCxt.processName)) {
-                    ProcessHelper.startDaemon("shinji", "rei", "asuka");
+                    ProcessHelper.startDaemon("shinger", "wore", "multi");
                 }
                 if (assist.processTwo.equals(appCxt.processName)) {
-                    ProcessHelper.startDaemon("rei", "shinji", "asuka");
+                    ProcessHelper.startDaemon("wore", "shinger", "multi");
                 }
                 if (assist.processThree.equals(appCxt.processName)) {
-                    ProcessHelper.startDaemon("asuka", "shinji", "rei");
+                    ProcessHelper.startDaemon("multi", "shinger", "wore");
                 }
             }
 
@@ -169,12 +169,11 @@ public class Asuka {
         }
     }
 
-    public static boolean isDaemon(String processName){
-        return processName.contains("asukaChannel")
-                || processName.contains("asukaService")
-                || processName.contains("asukaWorker")
+    /*public static boolean isDaemon(String processName){
+        return processName.contains("multiChannel")
+                || processName.contains("multiService")
+                || processName.contains("multiWorker")
                 || processName.contains("daemon")
                 || processName.contains("service");
-
-    }
+    }*/
 }
