@@ -31,6 +31,22 @@ allprojects {
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
         maven { url "https://www.jitpack.io" }
+
+        flatDir { dirs 'libs' }
+        //Anythink(Core)
+        maven { url "https://anythink.jfrog.io/artifactory/android_sdk" }
+        //Vungle
+        maven { url "https://s01.oss.sonatype.org/content/groups/staging/" }
+        //Ironsource
+        maven { url "https://android-sdk.is.com/" }
+        //Tapjoy
+        maven { url "https://sdk.tapjoy.com/" }
+        //Pangle
+        maven { url "https://artifact.bytedance.com/repository/pangle" }
+        //Mintegral
+        maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
+        //Chartboost
+        maven { url "https://cboost.jfrog.io/artifactory/helium" }
     }
 }
 
