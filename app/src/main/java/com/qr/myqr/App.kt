@@ -20,14 +20,12 @@ import com.reader.multiple.bmw4.MvpManager
 import com.reader.multiple.vb.MvpFbObj
 
 const val isReleaseMode = false
+lateinit var appIns: App
 class App : Application() {
-    companion object {
-        lateinit var mApp: App
-    }
 
     override fun onCreate() {
         super.onCreate()
-        mApp = this
+        appIns = this
 
         //Android 9及以上必须设置 多进程WebView兼容
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -62,6 +60,9 @@ class App : Application() {
     private val tapOnAppId = "a62b013be01931"
     private val tapOnAppKey = "c3d0d2a9a9d451b07e62b509659f7c97"
     private fun initTopOn() {
+        //初始化TopOn SDK之前调用此方法
+        //TTATInitManager.getInstance().setIsOpenDirectDownload(false)
+
         ATSDK.setNetworkLogDebug(!isReleaseMode) //SDK日志功能，集成测试阶段建议开启，上线前必须关闭
         Log.i("", "TopOn SDK version: " + ATSDK.getSDKVersionName()) //SDK版本
         ATSDK.integrationChecking(applicationContext) //检查广告平台的集成状态，提交审核时需注释此API

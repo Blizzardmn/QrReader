@@ -3,7 +3,7 @@ package com.qr.myqr.db
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.qr.myqr.App
+import com.qr.myqr.appIns
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 abstract class RoomImpl: RoomDatabase() {
     companion object {
         private val instance by lazy {
-            Room.databaseBuilder(App.mApp, RoomImpl::class.java, "qr_reader.db").apply {
+            Room.databaseBuilder(appIns, RoomImpl::class.java, "qr_reader.db").apply {
                 allowMainThreadQueries()
                 enableMultiInstanceInvalidation()
                 fallbackToDestructiveMigration()
