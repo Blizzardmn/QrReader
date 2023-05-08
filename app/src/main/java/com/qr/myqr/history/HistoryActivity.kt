@@ -5,10 +5,10 @@ import com.qr.myqr.basic.BasePage
 import com.qr.myqr.databinding.ActivityHistoryBinding
 
 class HistoryActivity : BasePage() {
-    override val viewBinding by lazy { ActivityHistoryBinding.inflate(layoutInflater) }
+    override val binding by lazy { ActivityHistoryBinding.inflate(layoutInflater) }
 
     override fun initView() {
-        viewBinding.run {
+        binding.run {
             ivBack.setOnClickListener { onBackPressed() }
             viewPager.isUserInputEnabled = false
             viewPager.adapter = PagerViewAdapter(this@HistoryActivity)

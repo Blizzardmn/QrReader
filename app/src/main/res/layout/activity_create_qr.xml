@@ -56,16 +56,25 @@
 
     </ScrollView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_ad"
+    <com.anythink.nativead.api.ATNativeView
+        android:id="@+id/native_ad_view"
         android:layout_width="match_parent"
         android:layout_height="264dp"
+        android:layout_centerInParent="true"
         android:layout_marginHorizontal="15dp"
         android:layout_marginBottom="15dp"
-        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@id/create_btn">
 
-    </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="12dp" />
+
+        <include
+            android:id="@+id/native_self_render"
+            layout="@layout/ad_native_self"
+            android:visibility="gone" />
+    </com.anythink.nativead.api.ATNativeView>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/create_btn"

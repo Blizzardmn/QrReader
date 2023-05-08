@@ -57,8 +57,8 @@ open class DefaultConf {
                         idList.add(
                             AdConf(
                                 id = idJson.optString("id"),
-                                type = idJson.optString("ad_type"),
-                                priority = idJson.optInt("weight")
+                                type = idJson.optString("type"),
+                                priority = idJson.optInt("priority")
                             )
                         )
                     }
@@ -78,50 +78,51 @@ open class DefaultConf {
             return """{
     "open":[
         {
-            "id":"ca-app-pub-3940256099942544/1033173712",
-            "ad_type":"ins",
-            "weight":1
+            "id":"b62b035d8cb432",
+            "type":"open",
+            "priority":1
         }
     ],
-    "ins_scan":[
+    "ins_home":[
         {
-            "id":"ca-app-pub-3940256099942544/1033173712",
-            "ad_type":"ins",
-            "weight":3
+            "id":"b62b014563dc89",
+            "type":"ins",
+            "priority":3
         }
     ],
-    "ins_clean":[
+    "ins_click":[
         {
-            "id":"ca-app-pub-3940256099942544/1033173712",
-            "ad_type":"ins",
-            "weight":3
+            "id":"b62b023555ba04",
+            "type":"ins",
+            "priority":3
         }
     ],
-    "ins_conn":[
+    "nav_create":[
         {
-            "id":"ca-app-pub-3940256099942544/1033173712",
-            "ad_type":"ins",
-            "weight":3
+            "id":"b62fb58f6b79e7",
+            "type":"nav",
+            "priority":3
         }
     ],
-    "nav_home":[
+    "nav_result":[
         {
-            "id":"ca-app-pub-3940256099942544/2247696110",
-            "ad_type":"nav",
-            "weight":1
+            "id":"b62b023b30350d",
+            "type":"nav",
+            "priority":1
         }
     ],
-    "nav_scan":[
+    "banner_main":[
         {
-            "id":"ca-app-pub-3940256099942544/2247696110",
-            "ad_type":"nav",
-            "weight":3
+            "id":"b62b01a4cd4853",
+            "type":"ban",
+            "priority":3
         }
     ],
-    "nav_result":[{
-            "id":"ca-app-pub-3940256099942544/2247696110",
-            "ad_type":"nav",
-            "weight":1
+    "banner_scan":[
+        {
+            "id":"b62b023625cf59",
+            "type":"ban",
+            "priority":1
         }
     ]
 }"""

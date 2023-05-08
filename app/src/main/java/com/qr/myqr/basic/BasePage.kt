@@ -6,15 +6,38 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
 abstract class BasePage : AppCompatActivity() {
-    abstract val viewBinding: ViewBinding
+
+    abstract val binding: ViewBinding
     abstract fun initView()
+
+    private var isPagePaused = false
+    fun isActivityPaused(): Boolean {
+        return isPagePaused
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setDensity()
-        setContentView(viewBinding.root)
+        setContentView(binding.root)
         initView()
     }
-//resources.displayMetrics.density
+
+    override fun onResume() {
+        super.onResume()
+        isPagePaused = false
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isPagePaused = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        isPagePaused = true
+    }
+
+    //resources.displayMetrics.density
     private fun setDensity() {
         val metrics: DisplayMetrics = resources.displayMetrics
         val td = metrics.heightPixels / 812f

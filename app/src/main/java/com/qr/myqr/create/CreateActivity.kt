@@ -9,17 +9,22 @@ import com.qr.myqr.databinding.ActivityCreateQrBinding
 import com.qr.myqr.db.CreateEntity
 import com.qr.myqr.db.RoomImpl
 import com.qr.myqr.main.UiBean
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsListener
+import com.qr.myqr.revenue.AdsLoader
+import com.qr.myqr.revenue.ad.BaseAd
+import com.qr.myqr.revenue.ad.TopNative
 import com.qr.myqr.toActivity
 
 class CreateActivity : BasePage() {
     private val daoCreate by lazy { RoomImpl.createDao }
-    override val viewBinding by lazy { ActivityCreateQrBinding.inflate(layoutInflater) }
+    override val binding by lazy { ActivityCreateQrBinding.inflate(layoutInflater) }
     private lateinit var uiBean: UiBean
     private lateinit var inputContent: InputContent
 
     override fun initView() {
         uiBean = intent.getSerializableExtra("bean") as UiBean
-        viewBinding.run {
+        binding.run {
             icBack.setOnClickListener { onBackPressed() }
             ivType.setImageResource(uiBean.icon)
             tvTitle.text = uiBean.name
@@ -38,6 +43,8 @@ class CreateActivity : BasePage() {
             }
             initFragment()
         }
+
+        showNavAd()
     }
 
     private fun initFragment() {
@@ -77,5 +84,18 @@ class CreateActivity : BasePage() {
             putString("content", s)
         })
         finish()
+    }
+
+    private fun showNavAd() {
+        AdsLoader.loadAd(this, AdPos.navCreate, object :AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                if (ad !is TopNative) return
+                ad.showAd(this@CreateActivity, binding.nativeAdView, binding.nativeSelfRender.root)
+            }
+
+            override fun onLoadErr(msg: String) {
+                super.onLoadErr(msg)
+            }
+        })
     }
 }

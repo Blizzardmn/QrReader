@@ -70,7 +70,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         }
         Log.i(adTag, "$adPos preloadAd")
 
-        loadAd(ctx.applicationContext, adPos, object : AdsListener() {
+        loadAd(ctx, adPos, object : AdsListener() {
             override fun onLoadedAd(ad: BaseAd) {
                 add2Cache(adPos, ad, forcePreload)
             }
@@ -114,7 +114,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         val idL = arrayListOf<AdConf>()
         idL.addAll(configs.lists)
         launch {
-            innerLoad(ctx.applicationContext, adPos, idL, adsListener)
+            innerLoad(ctx, adPos, idL, adsListener)
         }
     }
 
@@ -171,6 +171,14 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
                 Log.i(adTag, "$adPos loadNative: ${config.priority} ${config.id}")
                 syncRequesting[adPos] = adPos
                 loader?.loadNative(ctx, adPos, config, adsListener) {
+                    checkResult(it)
+                }
+            }
+
+            "ban" -> {
+                Log.i(adTag, "$adPos loadBanner: ${config.priority} ${config.id}")
+                syncRequesting[adPos] = adPos
+                loader?.loadBanner(ctx, adPos, config, adsListener) {
                     checkResult(it)
                 }
             }

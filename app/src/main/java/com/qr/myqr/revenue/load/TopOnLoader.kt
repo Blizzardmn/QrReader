@@ -55,10 +55,11 @@ class TopOnLoader {
         }
 
         val bannerView = ATBannerView(ctx)
+        bannerView.setPlacementId(config.id)
         val localMap = HashMap<String, Any>()
         val padding: Int = ctx.dip2px(12f)
         localMap[ATAdConst.KEY.AD_WIDTH] = ctx.resources.displayMetrics.widthPixels - 2 * padding
-        localMap[ATAdConst.KEY.AD_HEIGHT] = ctx.dip2px(60f)
+        localMap[ATAdConst.KEY.AD_HEIGHT] = ctx.dip2px(100f)
         bannerView.setLocalExtra(localMap)
 
         localBanner.loaded(bannerView, adsListener)

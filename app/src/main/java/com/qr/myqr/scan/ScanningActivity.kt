@@ -15,7 +15,6 @@ import androidx.camera.mlkit.vision.MlKitAnalyzer
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -30,8 +29,6 @@ import com.qr.myqr.db.RoomImpl
 import com.qr.myqr.db.ScanEntity
 import com.qr.myqr.main.Type
 import com.qr.myqr.toActivity
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class ScanningActivity : BasePage() {
     private var isOpenLight = false
@@ -58,10 +55,10 @@ class ScanningActivity : BasePage() {
                 syncGalleyBitmap(bitmap)
             }
         }
-    override val viewBinding by lazy { ActivityScanningBinding.inflate(layoutInflater) }
+    override val binding by lazy { ActivityScanningBinding.inflate(layoutInflater) }
 
     override fun initView() {
-        viewBinding.run {
+        binding.run {
             ivBack.setOnClickListener { onBackPressed() }
             ivGallery.setOnClickListener {
                 XXPermissions.with(this@ScanningActivity).permission(Permission.READ_MEDIA_IMAGES)
@@ -103,11 +100,11 @@ class ScanningActivity : BasePage() {
                 analyzerBorder(barcodeResults)
             })
         cameraController.bindToLifecycle(this)
-        viewBinding.previewView.controller = cameraController
+        binding.previewView.controller = cameraController
         cameraController.torchState.observe(this@ScanningActivity) {
             Log.i("", "flash --->$it")
             isOpenLight = it == 1
-            viewBinding.ivLight.setImageResource(if (isOpenLight) R.drawable.ic_light_open else R.drawable.ic_light_close)
+            binding.ivLight.setImageResource(if (isOpenLight) R.drawable.ic_light_open else R.drawable.ic_light_close)
         }
     }
 
@@ -157,10 +154,10 @@ class ScanningActivity : BasePage() {
 
     override fun onResume() {
         super.onResume()
-        viewBinding.run {
+        binding.run {
             ivScanningAnimator.post {
                 ivScanningAnimator.animation = TranslateAnimation(
-                    0f, 0f, 5f, viewBinding.ivCodeRe.height.toFloat() - 10f
+                    0f, 0f, 5f, binding.ivCodeRe.height.toFloat() - 10f
                 ).apply {
                     duration = 1200
                     repeatCount = -1
@@ -173,7 +170,7 @@ class ScanningActivity : BasePage() {
 
     override fun onPause() {
         super.onPause()
-        viewBinding.ivScanningAnimator.animation?.cancel()
+        binding.ivScanningAnimator.animation?.cancel()
     }
 
     private fun getUiType(type: Int): Type {

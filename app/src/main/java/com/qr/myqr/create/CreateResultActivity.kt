@@ -2,7 +2,6 @@ package com.qr.myqr.create
 
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.util.Log
 import android.widget.Toast
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
@@ -20,26 +19,26 @@ import com.qr.myqr.tools.checkReadMediaPermission
 class CreateResultActivity : BasePage() {
     private var bitmap: Bitmap? = null
     private var result = ""
-    override val viewBinding by lazy { ActivityCreateResultBinding.inflate(layoutInflater) }
+    override val binding by lazy { ActivityCreateResultBinding.inflate(layoutInflater) }
 
     override fun initView() {
         result = intent.getStringExtra("content") ?: ""
         bitmap = qrCode(result, dpToPx(95), dpToPx(95))
-        viewBinding.ivQrCode.setImageBitmap(bitmap)
-        viewBinding.ivBack.setOnClickListener {
+        binding.ivQrCode.setImageBitmap(bitmap)
+        binding.ivBack.setOnClickListener {
             onBackPressed()
         }
-        viewBinding.ivCopy.setOnClickListener {
+        binding.ivCopy.setOnClickListener {
             copyText(result)
         }
-        viewBinding.tvShare.setOnClickListener {
+        binding.tvShare.setOnClickListener {
             bitmap?.let {
                 checkReadMediaPermission {
                     ShareUtils.shareBitmapToOtherApp(this, it)
                 }
             }
         }
-        viewBinding.tvAction.setOnClickListener {
+        binding.tvAction.setOnClickListener {
             bitmap?.let {
                 checkReadMediaPermission {
                     ShareUtils.saveBitmapToMedia(this, it, saveFailed = {

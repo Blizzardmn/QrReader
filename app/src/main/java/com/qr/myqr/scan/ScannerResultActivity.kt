@@ -8,10 +8,10 @@ import com.qr.myqr.shareTextToOtherApp
 
 class ScannerResultActivity : BasePage() {
     private var result = ""
-    override val viewBinding by lazy { ActivityScannerResultBinding.inflate(layoutInflater) }
+    override val binding by lazy { ActivityScannerResultBinding.inflate(layoutInflater) }
     override fun initView() {
         result = intent.getStringExtra("scanResult") ?: ""
-        viewBinding.run {
+        binding.run {
             ivBack.setOnClickListener { onBackPressed() }
             tvShare.setOnClickListener {
                 shareTextToOtherApp(result)

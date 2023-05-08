@@ -77,20 +77,19 @@
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scrollbars="none"
+        android:layout_marginBottom="12dp"
         android:paddingHorizontal="7.5dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@id/card_ad"
         app:layout_constraintTop_toBottomOf="@id/ic_bg_top" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_ad"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="15dp"
+        android:layout_height="100dp"
+        android:layout_margin="12dp"
+        android:layout_marginBottom="10dp"
         app:cardBackgroundColor="#D8D8D8"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

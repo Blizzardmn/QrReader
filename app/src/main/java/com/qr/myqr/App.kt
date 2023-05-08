@@ -1,9 +1,11 @@
 package com.qr.myqr
 
+import android.app.Activity
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.os.Process
 import android.util.Log
 import android.webkit.WebView
@@ -15,9 +17,15 @@ import com.anythink.network.adcolony.AdColonyATInitConfig
 import com.anythink.network.mintegral.MintegralATInitConfig
 import com.anythink.network.pangle.PangleATInitConfig
 import com.anythink.network.vungle.VungleATInitConfig
+import com.qr.myqr.basic.BasePage
+import com.qr.myqr.main.MainActivity
 import com.qr.myqr.page.FirstActivity
 import com.reader.multiple.bmw4.MvpManager
 import com.reader.multiple.vb.MvpFbObj
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 const val isReleaseMode = false
 lateinit var appIns: App
@@ -43,6 +51,7 @@ class App : Application() {
         if (isReleaseMode && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             MvpFbObj.hi(this, FirstActivity::class.java.name)
         }
+        registerActivityLifecycleCallbacks(ActivityLife())
     }
 
     private fun processName(): String? {
@@ -94,6 +103,70 @@ class App : Application() {
 
         //初始化TopOn SDK以及广告平台SDK
         ATSDK.init(applicationContext, tapOnAppId, tapOnAppKey, atNetworkConfig)
+    }
+
+
+    fun isAppForeground(): Boolean {
+        return nActivity > 0
+    }
+    var blockOneHotLoad = false
+    var isScreenOn = true
+
+    private var nActivity = 0
+    private var delayJob: Job? = null
+    private var reachHot = false
+    private inner class ActivityLife: ActivityLifecycleCallbacks {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        }
+
+        override fun onActivityStarted(activity: Activity) {
+            //loggerActivityLife("onActivityStarted: $activity")
+            if (nActivity++ == 0) {
+                delayJob?.cancel()
+                //ProtectService.activityCheckStartup()
+
+                if (reachHot) {
+                    if (blockOneHotLoad) {
+                        blockOneHotLoad = false
+                    } else {
+                        if (activity is BasePage
+                            && activity !is FirstActivity
+                        ) {
+                            FirstActivity.hotStart(activity)
+                        }
+                    }
+                }
+                reachHot = false
+            }
+        }
+
+        override fun onActivityStopped(activity: Activity) {
+            //loggerActivityLife("onActivityStopped: $activity")
+            if (--nActivity <= 0) {
+                delayJob = GlobalScope.launch {
+                    delay(1000L)
+                    reachHot = true
+
+                    if (activity.isFinishing || activity.isDestroyed) return@launch
+                    if (activity is MainActivity) return@launch
+                    Log.e("ActivityLife", "finish: $activity")
+                    activity.finish()
+                }
+            }
+        }
+
+        override fun onActivityResumed(activity: Activity) {
+        }
+
+        override fun onActivityPaused(activity: Activity) {
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+        }
+
+        override fun onActivityDestroyed(activity: Activity) {
+            //loggerActivityLife("onActivityDestroyed: $activity")
+        }
     }
 
 }
