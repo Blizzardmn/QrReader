@@ -1,0 +1,32 @@
+package com.qr.myqr.data
+
+import com.tencent.mmkv.MMKV
+
+class AppCache {
+
+    companion object {
+        val ins: AppCache by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            AppCache()
+        }
+    }
+
+    private val mmkv = MMKV.mmkvWithID("qr_reader_conf_app", MMKV.MULTI_PROCESS_MODE)
+
+    var referValue: String
+        set(value) {
+            mmkv.encode("installed_referrer", value)
+        }
+        get() {
+            return mmkv.decodeString("installed_referrer", "") ?: ""
+        }
+
+    val firstInAppTms: Long
+        get() {
+            var l = mmkv.decodeLong("first_in_app", 0L)
+            if (l <= 0L) {
+                l = System.currentTimeMillis()
+                mmkv.encode("first_in_app", l)
+            }
+            return l
+        }
+}

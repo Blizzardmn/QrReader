@@ -5,7 +5,8 @@ import androidx.annotation.StringDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-@StringDef({AdPos.open, AdPos.navCreate, AdPos.navResult, AdPos.insHome, AdPos.insClick
+@StringDef({AdPos.open, AdPos.navCreate, AdPos.navResult
+        , AdPos.insHome, AdPos.insClick, AdPos.insOut
         , AdPos.bannerMain, AdPos.bannerOther})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AdPos {
@@ -14,8 +15,9 @@ public @interface AdPos {
     String navCreate = "nav_create";
     String navResult = "nav_result";
 
-    String insHome = "ins_home";
-    String insClick = "ins_click";
+    String insHome = "int_home";
+    String insClick = "int_click";
+    String insOut = "int_out";
 
     String bannerMain = "banner_main";
     String bannerOther = "banner_other";

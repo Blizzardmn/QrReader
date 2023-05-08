@@ -11,4 +11,8 @@ class RemoteConfig {
     fun getAdsConf(): String {
         return ""
     }
+
+    fun getSafeMode(): Long {
+        return 0L
+    }
 }

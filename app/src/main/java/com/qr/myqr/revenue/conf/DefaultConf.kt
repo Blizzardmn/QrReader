@@ -83,14 +83,21 @@ open class DefaultConf {
             "priority":1
         }
     ],
-    "ins_home":[
+    "int_home":[
         {
             "id":"b62b014563dc89",
             "type":"ins",
             "priority":3
         }
     ],
-    "ins_click":[
+    "int_click":[
+        {
+            "id":"b62b023555ba04",
+            "type":"ins",
+            "priority":3
+        }
+    ],
+    "int_out":[
         {
             "id":"b62b023555ba04",
             "type":"ins",
@@ -118,7 +125,7 @@ open class DefaultConf {
             "priority":3
         }
     ],
-    "banner_scan":[
+    "banner_other":[
         {
             "id":"b62b023625cf59",
             "type":"ban",

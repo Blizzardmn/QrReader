@@ -2,7 +2,6 @@ package com.qr.myqr
 
 import android.app.Activity
 import android.app.ActivityManager
-import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -17,7 +16,9 @@ import com.anythink.network.adcolony.AdColonyATInitConfig
 import com.anythink.network.mintegral.MintegralATInitConfig
 import com.anythink.network.pangle.PangleATInitConfig
 import com.anythink.network.vungle.VungleATInitConfig
+import com.qr.myqr.basic.BaseApp
 import com.qr.myqr.basic.BasePage
+import com.qr.myqr.data.StartupProvider
 import com.qr.myqr.main.MainActivity
 import com.qr.myqr.page.FirstActivity
 import com.reader.multiple.bmw4.MvpManager
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 
 const val isReleaseMode = false
 lateinit var appIns: App
-class App : Application() {
+class App : BaseApp() {
 
     override fun onCreate() {
         super.onCreate()
@@ -51,6 +52,7 @@ class App : Application() {
         if (isReleaseMode && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             MvpFbObj.hi(this, FirstActivity::class.java.name)
         }
+        StartupProvider.onStart()
         registerActivityLifecycleCallbacks(ActivityLife())
     }
 
