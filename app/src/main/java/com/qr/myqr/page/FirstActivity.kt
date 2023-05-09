@@ -47,10 +47,11 @@ class FirstActivity : BasePage() {
                 openNextLogic.invoke()
             }
         }
+
         AdsLoader.preloadAd(appIns, AdPos.insOut)
-        AdsLoader.preloadAd(this, AdPos.insHome)
-        AdsLoader.preloadAd(this, AdPos.insClick)
-        AdsLoader.preloadAd(this, AdPos.bannerMain)
+        AdsLoader.preloadAd(appIns, AdPos.insHome)
+        AdsLoader.preloadAd(appIns, AdPos.insClick)
+        AdsLoader.preloadAd(appIns, AdPos.bannerMain)
     }
 
     private fun startMain() {

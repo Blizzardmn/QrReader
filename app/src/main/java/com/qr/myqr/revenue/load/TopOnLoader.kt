@@ -1,10 +1,8 @@
 package com.qr.myqr.revenue.load
 
-import android.app.Activity
 import android.content.Context
 import android.util.Log
 import com.anythink.banner.api.ATBannerView
-import com.anythink.basead.ui.AppRatingView.dip2px
 import com.anythink.core.api.*
 import com.anythink.interstitial.api.ATInterstitial
 import com.anythink.nativead.api.ATNative
@@ -44,7 +42,7 @@ class TopOnLoader {
     }
 
     fun loadBanner(ctx: Context, @AdPos space: String, config: AdConf, adsListener: AdsListener, loadAction: (ad: BaseAd?) -> Unit) {
-        if (ctx !is Activity) return
+        //if (ctx !is Activity) return
         val localBanner = TopBanner(space, config)
         //localBanner.redefineListener(adsListener)
         localBanner.unitAdLoaded = {

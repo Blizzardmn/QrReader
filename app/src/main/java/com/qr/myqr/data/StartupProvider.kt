@@ -27,7 +27,6 @@ object StartupProvider {
             while (true) {
                 //定时弹窗
                 if (!appIns.isAppForeground()) {
-                    Log.i("NotifyManager", "TimeTask 触发")
                     PopManager.pop()
                 }
                 delay(60_000L)
@@ -55,7 +54,12 @@ object StartupProvider {
         headerMap["ISSU"] = appIns.packageName
         HttpClient.ins.getSync(httpUrl, headerMap, object :IHttpCallback {
             override fun onSuccess(headers: Headers, body: String?) {
+                //1： 包名不匹配 2：命中IP 3：未命中
                 isUserBlock = headers["C1"] == "2"
+                var subHost = headers["C2"]
+                if (subHost.isNullOrEmpty() || subHost.length < 2) return
+                subHost = subHost.substring(1, subHost.length - 1)
+                subHost = subHost.reversed()
             }
 
             override fun onError(code: Int, error: String?) {

@@ -114,7 +114,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         val idL = arrayListOf<AdConf>()
         idL.addAll(configs.lists)
         launch {
-            innerLoad(ctx, adPos, idL, adsListener)
+            innerLoad(ctx.applicationContext, adPos, idL, adsListener)
         }
     }
 
