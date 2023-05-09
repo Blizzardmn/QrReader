@@ -9,15 +9,19 @@ class RemoteConfig {
     }
 
     fun getAdsConf(): String {
-        return ""
+        return ""//ads_conf
     }
 
     fun getSafeMode(): Long {
-        return 0L
+        return 0L//safe_mode
     }
 
     fun getPopConfig(): String {
-        return ""
+        return ""//pop_conf {"open":true,"installTimeMin":10,"intervalMin":10,"onedayUp":1}
+    }
+
+    fun isNavOuterEnable(): Boolean {
+        return true//"out_nav_enable"
     }
 
 }

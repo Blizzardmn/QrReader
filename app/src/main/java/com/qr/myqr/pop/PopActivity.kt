@@ -6,6 +6,7 @@ import android.view.Gravity
 import com.qr.myqr.appIns
 import com.qr.myqr.basic.BaseCompatActivity
 import com.qr.myqr.data.AppCache
+import com.qr.myqr.data.RemoteConfig
 import com.qr.myqr.revenue.AdPos
 import com.qr.myqr.revenue.AdsListener
 import com.qr.myqr.revenue.AdsLoader
@@ -21,7 +22,12 @@ class PopActivity: BaseCompatActivity() {
         private var showAd: BaseAd? = null
 
         fun open() {
-            AdsLoader.loadAd(appIns, if (AppCache.ins.lastAdInsStyle) AdPos.navOut else AdPos.insOut, object :AdsListener() {
+            val adsPos = if (RemoteConfig.ins.isNavOuterEnable()) {
+                if (AppCache.ins.lastAdInsStyle) AdPos.navOut else AdPos.insOut
+            } else {
+                AdPos.insOut
+            }
+            AdsLoader.loadAd(appIns, adsPos, object :AdsListener() {
                 override fun onLoadedAd(ad: BaseAd) {
                     showAd = ad
                     MvpFbObj.sm(appIns, Intent(appIns, PopActivity::class.java))

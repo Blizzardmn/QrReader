@@ -73,8 +73,8 @@ class App : BaseApp() {
         return null
     }
 
-    private val tapOnAppId = "a62b013be01931"
-    private val tapOnAppKey = "c3d0d2a9a9d451b07e62b509659f7c97"
+    private val tapOnAppId = "a642e691220fc0"
+    private val tapOnAppKey = "f3a90e6ee8e189d00e8ea2c3e40f5d55"
     private fun initTopOn() {
         //初始化TopOn SDK之前调用此方法
         //TTATInitManager.getInstance().setIsOpenDirectDownload(false)
@@ -93,7 +93,7 @@ class App : BaseApp() {
         //Mintegral
         val mintegralATInitConfig = MintegralATInitConfig(tapOnAppId, tapOnAppKey)
         //AdColony
-        val adColonyATInitConfig = AdColonyATInitConfig(tapOnAppId, "b62b037cc24451")
+        val adColonyATInitConfig = AdColonyATInitConfig(tapOnAppId, "b642e6dd17d448")
         //Pangle
         val pangleATInitConfig = PangleATInitConfig(tapOnAppId)
         //Vungle

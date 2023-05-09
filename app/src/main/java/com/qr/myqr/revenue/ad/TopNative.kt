@@ -23,6 +23,7 @@ class TopNative(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
 
     fun showAd(activityCtx: Activity, atNativeContainer: ATNativeView, selfRender: View): Boolean {
         val nativeAd = atNativeAd?.nativeAd ?: return false
+        ATNative.entryAdScenario(adConf.placementId, "")
         nativeAd.setNativeEventListener(object :ATNativeEventExListener {
             override fun onAdImpressed(p0: ATNativeAdView?, p1: ATAdInfo?) {
                 unitAdShown.invoke()
