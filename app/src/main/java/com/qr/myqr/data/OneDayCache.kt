@@ -38,12 +38,12 @@ class OneDayCache {
         return mmkv.decodeLong(key, 0L)
     }
 
-    fun addAlertCounters(source: String) {
+    fun addAlertCounters() {
         val key = "last_alert_counters"
         val times = mmkv.decodeInt(key, 0) + 1
         mmkv.encode(key, times)
     }
-    fun getAlertCounters(source: String): Int {
+    fun getAlertCounters(): Int {
         val key = "last_alert_counters"
         return mmkv.decodeInt(key, 0)
     }

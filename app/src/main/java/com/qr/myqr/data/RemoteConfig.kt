@@ -15,4 +15,9 @@ class RemoteConfig {
     fun getSafeMode(): Long {
         return 0L
     }
+
+    fun getPopConfig(): String {
+        return ""
+    }
+
 }

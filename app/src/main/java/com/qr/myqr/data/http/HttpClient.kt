@@ -54,7 +54,7 @@ class HttpClient {
             response = mClient.newCall(builder.build()).execute()
             val bodyString = response.body?.string()
             if (response.isSuccessful) {
-                listener.onSuccess(bodyString)
+                listener.onSuccess(response.headers, bodyString)
             } else {
                 listener.onError(response.code, bodyString)
             }
@@ -65,8 +65,9 @@ class HttpClient {
         }
     }
 
-    fun getSync(url: String, listener: IHttpCallback) {
+    fun getSync(url: String, headers: HashMap<String, String>? = null, listener: IHttpCallback) {
         val builder = Request.Builder().url(url)
+        headers?.forEach { (t, u) -> builder.header(t, u) }
         var response: Response? = null
         try {
             //将请求添加到请求队列等待执行，并返回执行后的Response对象
@@ -75,7 +76,7 @@ class HttpClient {
             if (response.isSuccessful) {
                 //这里需要注意，response.body().string()是获取返回的结果，此句话只能调用一次，再次调用获得不到结果。
                 //所以先将结果使用result变量接收
-                listener.onSuccess(response.body?.string())
+                listener.onSuccess(response.headers, response.body?.string())
             } else {
                 listener.onError(response.code, response.body?.string())
             }

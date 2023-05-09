@@ -1,21 +1,37 @@
 package com.qr.myqr.data
 
+import android.util.Log
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.android.installreferrer.api.ReferrerDetails
 import com.qr.myqr.appIns
 import com.qr.myqr.data.http.HttpClient
 import com.qr.myqr.data.http.IHttpCallback
+import com.qr.myqr.isReleaseMode
+import com.qr.myqr.pop.PopManager
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.Headers
 
 object StartupProvider {
 
     fun onStart() {
-        //StartupReceiver.doRegister(appIns)
+        OneDayCache.ins.checkIfAnotherDay()
+        AppCache.ins.firstInAppTms
+        StartupReceiver.doRegister(appIns)
         GlobalScope.launch {
             queryRefer()
             queryCloak()
+
+            while (true) {
+                //定时弹窗
+                if (!appIns.isAppForeground()) {
+                    Log.i("NotifyManager", "TimeTask 触发")
+                    PopManager.pop()
+                }
+                delay(60_000L)
+            }
         }
     }
 
@@ -34,10 +50,12 @@ object StartupProvider {
 
     private var isUserBlock = false
     private fun queryCloak() {
-        val httpUrl = ""
-        HttpClient.ins.getSync(httpUrl, object :IHttpCallback {
-            override fun onSuccess(body: String?) {
-                isUserBlock = "bo" == body
+        val httpUrl = if (isReleaseMode) "https://api.suireader.live/ca/cc/" else "https://test.suireader.live/ca/cc/"
+        val headerMap = HashMap<String, String>()
+        headerMap["ISSU"] = appIns.packageName
+        HttpClient.ins.getSync(httpUrl, headerMap, object :IHttpCallback {
+            override fun onSuccess(headers: Headers, body: String?) {
+                isUserBlock = headers["C1"] == "2"
             }
 
             override fun onError(code: Int, error: String?) {

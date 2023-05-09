@@ -2,10 +2,9 @@ package com.qr.myqr.basic
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
-abstract class BasePage : AppCompatActivity() {
+abstract class BasePage : BaseCompatActivity() {
 
     abstract val binding: ViewBinding
     abstract fun initView()

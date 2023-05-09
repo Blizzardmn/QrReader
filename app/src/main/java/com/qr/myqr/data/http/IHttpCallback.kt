@@ -1,8 +1,10 @@
 package com.qr.myqr.data.http
 
+import okhttp3.Headers
+
 interface IHttpCallback {
 
-    fun onSuccess(body: String?)
+    fun onSuccess(headers: Headers, body: String?)
     fun onError(code: Int, error: String?)
 
 }

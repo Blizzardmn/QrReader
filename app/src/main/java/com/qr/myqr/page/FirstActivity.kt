@@ -47,6 +47,7 @@ class FirstActivity : BasePage() {
                 openNextLogic.invoke()
             }
         }
+        AdsLoader.preloadAd(appIns, AdPos.insOut)
         AdsLoader.preloadAd(this, AdPos.insHome)
         AdsLoader.preloadAd(this, AdPos.insClick)
         AdsLoader.preloadAd(this, AdPos.bannerMain)

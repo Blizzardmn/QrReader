@@ -71,6 +71,12 @@
             android:name=".scan.ScanningActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".pop.PopActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@style/OnePixTheme" />
+
         <!--如果缺少以下配置，可能导致广告图片显示不出来或者广告加载没有回调-->
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>

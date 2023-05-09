@@ -22,10 +22,10 @@ class AppCache {
 
     val firstInAppTms: Long
         get() {
-            var l = mmkv.decodeLong("first_in_app", 0L)
+            var l = mmkv.decodeLong("first_open_app", 0L)
             if (l <= 0L) {
                 l = System.currentTimeMillis()
-                mmkv.encode("first_in_app", l)
+                mmkv.encode("first_open_app", l)
             }
             return l
         }
