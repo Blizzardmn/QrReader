@@ -8,7 +8,6 @@
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginTop="26dp"
         android:gravity="center"
         android:text="History"
         android:textColor="#333333"
