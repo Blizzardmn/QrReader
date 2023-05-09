@@ -205,6 +205,7 @@ class ScanningActivity : BasePage() {
                 if (!ad.show(this@ScanningActivity)) {
                     nextDo.invoke()
                 }
+
                 AdsLoader.preloadAd(this@ScanningActivity, AdPos.insClick)
             }
 
