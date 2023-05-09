@@ -48,7 +48,6 @@ class FirstActivity : BasePage() {
             }
         }
 
-        AdsLoader.preloadAd(appIns, AdPos.insOut)
         AdsLoader.preloadAd(appIns, AdPos.insHome)
         AdsLoader.preloadAd(appIns, AdPos.insClick)
         AdsLoader.preloadAd(appIns, AdPos.bannerMain)

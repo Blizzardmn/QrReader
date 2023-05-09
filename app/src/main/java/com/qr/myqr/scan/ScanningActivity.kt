@@ -24,10 +24,17 @@ import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.qr.myqr.R
 import com.qr.myqr.basic.BasePage
+import com.qr.myqr.data.StartupProvider
 import com.qr.myqr.databinding.ActivityScanningBinding
 import com.qr.myqr.db.RoomImpl
 import com.qr.myqr.db.ScanEntity
 import com.qr.myqr.main.Type
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsListener
+import com.qr.myqr.revenue.AdsLoader
+import com.qr.myqr.revenue.ad.BaseAd
+import com.qr.myqr.revenue.ad.TopBanner
+import com.qr.myqr.revenue.ad.TopInterstitial
 import com.qr.myqr.toActivity
 
 class ScanningActivity : BasePage() {
@@ -79,6 +86,7 @@ class ScanningActivity : BasePage() {
             }
         }
         startCamera()
+        showBanner()
     }
 
 
@@ -137,7 +145,9 @@ class ScanningActivity : BasePage() {
             Toast.makeText(this, "Detection failed", Toast.LENGTH_LONG).show()
             return
         }
-        toResultPage(stringBuilder.toString(), type)
+        showIns {
+            toResultPage(stringBuilder.toString(), type)
+        }
     }
 
     private fun toResultPage(string: String, barcodeType: Int) {
@@ -182,5 +192,37 @@ class ScanningActivity : BasePage() {
             Barcode.TYPE_WIFI -> Type.WiFi
             else -> Type.Text
         }
+    }
+
+    private fun showIns(nextDo: () -> Unit) {
+        if (!StartupProvider.isOneShotEnable()) {
+            nextDo.invoke()
+            return
+        }
+        AdsLoader.loadAd(this, AdPos.insClick, object :AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                if (ad !is TopInterstitial) return
+                if (!ad.show(this@ScanningActivity)) {
+                    nextDo.invoke()
+                }
+            }
+
+            override fun onLoadErr(msg: String) {
+                nextDo.invoke()
+            }
+
+            override fun onDismiss() {
+                nextDo.invoke()
+            }
+        }, onlyCache = true)
+    }
+
+    private fun showBanner() {
+        AdsLoader.loadAd(this, AdPos.bannerOther, object : AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                if (ad !is TopBanner) return
+                ad.show(binding.cardAd)
+            }
+        })
     }
 }

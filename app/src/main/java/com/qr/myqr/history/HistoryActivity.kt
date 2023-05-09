@@ -3,6 +3,11 @@ package com.qr.myqr.history
 import com.qr.myqr.R
 import com.qr.myqr.basic.BasePage
 import com.qr.myqr.databinding.ActivityHistoryBinding
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsListener
+import com.qr.myqr.revenue.AdsLoader
+import com.qr.myqr.revenue.ad.BaseAd
+import com.qr.myqr.revenue.ad.TopBanner
 
 class HistoryActivity : BasePage() {
     override val binding by lazy { ActivityHistoryBinding.inflate(layoutInflater) }
@@ -29,5 +34,16 @@ class HistoryActivity : BasePage() {
                 }
             }
         }
+
+        showBanner()
+    }
+
+    private fun showBanner() {
+        AdsLoader.loadAd(this, AdPos.bannerOther, object : AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                if (ad !is TopBanner) return
+                ad.show(binding.cardAd)
+            }
+        })
     }
 }

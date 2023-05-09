@@ -65,7 +65,7 @@ class MainActivity : BasePage() {
     }
 
     private fun showIns(nextDo: () -> Unit) {
-        AdsLoader.loadAd(this, AdPos.insClick, object :AdsListener() {
+        AdsLoader.loadAd(this, AdPos.insHome, object :AdsListener() {
             override fun onLoadedAd(ad: BaseAd) {
                 if (ad !is TopInterstitial) return
                 if (!ad.show(this@MainActivity)) {

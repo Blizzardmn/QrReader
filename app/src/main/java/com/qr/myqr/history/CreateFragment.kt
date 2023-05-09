@@ -6,9 +6,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.qr.myqr.basic.BaseFragment
 import com.qr.myqr.create.CreateResultActivity
+import com.qr.myqr.data.StartupProvider
 import com.qr.myqr.databinding.FragmentCreateHistoryBinding
 import com.qr.myqr.db.RoomImpl
 import com.qr.myqr.main.getUiBeanByTypeIndex
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsListener
+import com.qr.myqr.revenue.AdsLoader
+import com.qr.myqr.revenue.ad.BaseAd
+import com.qr.myqr.revenue.ad.TopInterstitial
 import com.qr.myqr.toActivity
 import kotlinx.coroutines.launch
 
@@ -22,7 +28,9 @@ class CreateFragment : BaseFragment() {
             mAdapter = HistoryAdapter(getUiData())
             rv.adapter = mAdapter.apply {
                 itemClick = {
-                    toCreateResult(it.content)
+                    showIns {
+                        toCreateResult(it.content)
+                    }
                 }
                 onLongClickListener = {
                     AlertDialog.Builder(context).setMessage("Are your sure delete this record?")
@@ -39,6 +47,30 @@ class CreateFragment : BaseFragment() {
             }
             rv.layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun showIns(nextDo: () -> Unit) {
+        val activityCtx = activity
+        if (activityCtx == null || !StartupProvider.isOneShotEnable()) {
+            nextDo.invoke()
+            return
+        }
+        AdsLoader.loadAd(activityCtx, AdPos.insClick, object : AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                if (ad !is TopInterstitial) return
+                if (!ad.show(activityCtx)) {
+                    nextDo.invoke()
+                }
+            }
+
+            override fun onLoadErr(msg: String) {
+                nextDo.invoke()
+            }
+
+            override fun onDismiss() {
+                nextDo.invoke()
+            }
+        }, onlyCache = true)
     }
 
     private fun getUiData(): ArrayList<HistoryUiBean> {

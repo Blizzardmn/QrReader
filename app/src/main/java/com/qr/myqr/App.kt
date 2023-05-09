@@ -21,12 +21,11 @@ import com.qr.myqr.basic.BasePage
 import com.qr.myqr.data.StartupProvider
 import com.qr.myqr.main.MainActivity
 import com.qr.myqr.page.FirstActivity
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsLoader
 import com.reader.multiple.bmw4.MvpManager
 import com.reader.multiple.vb.MvpFbObj
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 const val isReleaseMode = false
 lateinit var appIns: App
@@ -54,6 +53,12 @@ class App : BaseApp() {
         }
         StartupProvider.onStart()
         registerActivityLifecycleCallbacks(ActivityLife())
+
+        MainScope().launch {
+            delay(6000L)
+            AdsLoader.preloadAd(appIns, AdPos.insOut)
+            AdsLoader.preloadAd(appIns, AdPos.navOut)
+        }
     }
 
     private fun processName(): String? {

@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.qr.myqr.R
 import com.qr.myqr.basic.BaseInputFragment
 import com.qr.myqr.basic.BasePage
+import com.qr.myqr.data.StartupProvider
 import com.qr.myqr.databinding.ActivityCreateQrBinding
 import com.qr.myqr.db.CreateEntity
 import com.qr.myqr.db.RoomImpl
@@ -13,6 +14,7 @@ import com.qr.myqr.revenue.AdPos
 import com.qr.myqr.revenue.AdsListener
 import com.qr.myqr.revenue.AdsLoader
 import com.qr.myqr.revenue.ad.BaseAd
+import com.qr.myqr.revenue.ad.TopInterstitial
 import com.qr.myqr.revenue.ad.TopNative
 import com.qr.myqr.toActivity
 
@@ -38,7 +40,9 @@ class CreateActivity : BasePage() {
                     ).show()
                     return@setOnClickListener
                 } else {
-                    toCreateResultActivity(content)
+                    showIns {
+                        toCreateResultActivity(content)
+                    }
                 }
             }
             initFragment()
@@ -86,7 +90,31 @@ class CreateActivity : BasePage() {
         finish()
     }
 
+    private fun showIns(nextDo: () -> Unit) {
+        if (!StartupProvider.isOneShotEnable()) {
+            nextDo.invoke()
+            return
+        }
+        AdsLoader.loadAd(this, AdPos.insClick, object :AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                if (ad !is TopInterstitial) return
+                if (!ad.show(this@CreateActivity)) {
+                    nextDo.invoke()
+                }
+            }
+
+            override fun onLoadErr(msg: String) {
+                nextDo.invoke()
+            }
+
+            override fun onDismiss() {
+                nextDo.invoke()
+            }
+        }, onlyCache = true)
+    }
+
     private fun showNavAd() {
+        AdsLoader.preloadAd(this, AdPos.navResult)
         AdsLoader.loadAd(this, AdPos.navCreate, object :AdsListener() {
             override fun onLoadedAd(ad: BaseAd) {
                 if (ad !is TopNative) return

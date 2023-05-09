@@ -4,10 +4,17 @@ import android.app.AlertDialog
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.qr.myqr.appIns
 import com.qr.myqr.basic.BaseFragment
+import com.qr.myqr.data.StartupProvider
 import com.qr.myqr.databinding.FragmentScanHistoryBinding
 import com.qr.myqr.db.RoomImpl
 import com.qr.myqr.main.getUiBeanByTypeIndex
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsListener
+import com.qr.myqr.revenue.AdsLoader
+import com.qr.myqr.revenue.ad.BaseAd
+import com.qr.myqr.revenue.ad.TopInterstitial
 import com.qr.myqr.scan.ScannerResultActivity
 import com.qr.myqr.toActivity
 import kotlinx.coroutines.launch
@@ -23,7 +30,9 @@ class ScanFragment : BaseFragment() {
             mAdapter = HistoryAdapter(getUiData())
             rv.adapter = mAdapter.apply {
                 itemClick = {
-                    toResultPage(it.content);
+                    showIns {
+                        toResultPage(it.content)
+                    }
                 }
                 onLongClickListener = {
                     AlertDialog.Builder(context).setMessage("Are your sure delete this record?")
@@ -40,6 +49,30 @@ class ScanFragment : BaseFragment() {
             }
             rv.layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun showIns(nextDo: () -> Unit) {
+        val activityCtx = activity
+        if (activityCtx == null || !StartupProvider.isOneShotEnable()) {
+            nextDo.invoke()
+            return
+        }
+        AdsLoader.loadAd(activityCtx, AdPos.insClick, object :AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                if (ad !is TopInterstitial) return
+                if (!ad.show(activityCtx)) {
+                    nextDo.invoke()
+                }
+            }
+
+            override fun onLoadErr(msg: String) {
+                nextDo.invoke()
+            }
+
+            override fun onDismiss() {
+                nextDo.invoke()
+            }
+        }, onlyCache = true)
     }
 
     private fun getUiData(): ArrayList<HistoryUiBean> {

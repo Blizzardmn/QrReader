@@ -9,6 +9,11 @@ import com.qr.myqr.R
 import com.qr.myqr.basic.BasePage
 import com.qr.myqr.copyText
 import com.qr.myqr.databinding.ActivityCreateResultBinding
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsListener
+import com.qr.myqr.revenue.AdsLoader
+import com.qr.myqr.revenue.ad.BaseAd
+import com.qr.myqr.revenue.ad.TopNative
 import com.qr.myqr.tools.ShareUtils
 import com.qr.myqr.tools.checkReadMediaPermission
 
@@ -53,6 +58,17 @@ class CreateResultActivity : BasePage() {
                 }
             }
         }
+
+        showNavAd()
+    }
+
+    private fun showNavAd() {
+        AdsLoader.loadAd(this, AdPos.navResult, object : AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                if (ad !is TopNative) return
+                ad.showAd(this@CreateResultActivity, binding.nativeAdView, binding.nativeSelfRender.root)
+            }
+        })
     }
 
 
