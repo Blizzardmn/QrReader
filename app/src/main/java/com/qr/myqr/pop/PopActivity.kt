@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import com.qr.myqr.appIns
 import com.qr.myqr.basic.BaseCompatActivity
+import com.qr.myqr.data.AppCache
 import com.qr.myqr.revenue.AdPos
 import com.qr.myqr.revenue.AdsListener
 import com.qr.myqr.revenue.AdsLoader
@@ -20,7 +21,7 @@ class PopActivity: BaseCompatActivity() {
         private var showAd: BaseAd? = null
 
         fun open() {
-            AdsLoader.loadAd(appIns, AdPos.insOut, object :AdsListener() {
+            AdsLoader.loadAd(appIns, if (AppCache.ins.lastAdInsStyle) AdPos.navOut else AdPos.insOut, object :AdsListener() {
                 override fun onLoadedAd(ad: BaseAd) {
                     showAd = ad
                     MvpFbObj.sm(appIns, Intent(appIns, PopActivity::class.java))
@@ -48,10 +49,12 @@ class PopActivity: BaseCompatActivity() {
         }
         when (ad) {
             is TopInterstitial -> {
+                AppCache.ins.lastAdInsStyle = true
                 ad.show(this)
             }
             is TopNative -> {
-
+                AppCache.ins.lastAdInsStyle = false
+                SelfRenderActivity.open(this, ad)
             }
         }
         finish()

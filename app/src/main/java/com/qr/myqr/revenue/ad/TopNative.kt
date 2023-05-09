@@ -17,6 +17,10 @@ class TopNative(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
         atNativeAd = ad as? ATNative
     }
 
+    override fun onDestroy() {
+        atNativeAd?.nativeAd?.destory()
+    }
+
     fun showAd(activityCtx: Activity, atNativeContainer: ATNativeView, selfRender: View): Boolean {
         val nativeAd = atNativeAd?.nativeAd ?: return false
         nativeAd.setNativeEventListener(object :ATNativeEventExListener {

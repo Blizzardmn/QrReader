@@ -92,10 +92,6 @@ class CreateActivity : BasePage() {
                 if (ad !is TopNative) return
                 ad.showAd(this@CreateActivity, binding.nativeAdView, binding.nativeSelfRender.root)
             }
-
-            override fun onLoadErr(msg: String) {
-                super.onLoadErr(msg)
-            }
         })
     }
 }

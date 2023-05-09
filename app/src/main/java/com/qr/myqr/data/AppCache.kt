@@ -29,4 +29,12 @@ class AppCache {
             }
             return l
         }
+
+    var lastAdInsStyle: Boolean
+        set(value) {
+            mmkv.encode("last_style_ins", value)
+        }
+        get() {
+            return mmkv.decodeBool("last_style_ins", false)
+        }
 }

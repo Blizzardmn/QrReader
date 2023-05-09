@@ -67,12 +67,6 @@
         android:background="@drawable/rect_dbdbdb_r12"
         app:layout_constraintBottom_toTopOf="@id/create_btn">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardBackgroundColor="#D8D8D8"
-            app:cardCornerRadius="12dp" />
-
         <include
             android:id="@+id/native_self_render"
             layout="@layout/ad_native_self"

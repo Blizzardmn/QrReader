@@ -79,6 +79,13 @@
             android:noHistory="true"
             android:theme="@style/OnePixTheme" />
 
+        <activity
+            android:name=".pop.SelfRenderActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:theme="@style/OnePixTheme" />
+
         <!--如果缺少以下配置，可能导致广告图片显示不出来或者广告加载没有回调-->
         <uses-library
             android:name="org.apache.http.legacy"
