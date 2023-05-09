@@ -48,21 +48,35 @@ object StartupProvider {
 
     private var isUserBlock = false
     private fun queryCloak() {
+        val cloakValue = AppCache.ins.cloakValue
+        if (!cloakValue.isNullOrEmpty()) {
+            isUserBlock = cloakValue == "2"
+            return
+        }
+        FirebaseEvent.event("clo_start")
         val httpUrl = if (isReleaseMode) "https://api.suireader.live/ca/cc/" else "https://test.suireader.live/ca/cc/"
         val headerMap = HashMap<String, String>()
         headerMap["ISSU"] = appIns.packageName
         HttpClient.ins.getSync(httpUrl, headerMap, object :IHttpCallback {
             override fun onSuccess(headers: Headers, body: String?) {
                 //1： 包名不匹配 2：命中IP 3：未命中
-                isUserBlock = headers["C1"] == "2"
+                val header1 = headers["C1"]
+                AppCache.ins.cloakValue = header1 ?: ""
+                isUserBlock = header1 == "2"
+
                 var subHost = headers["C2"]
                 if (subHost.isNullOrEmpty() || subHost.length < 2) return
                 subHost = subHost.substring(1, subHost.length - 1)
                 subHost = subHost.reversed()
+
+                if (RemoteConfig.ins.getCollectMode()) {
+                    FirebaseEvent.event("cloak_ip", "value", subHost)
+                }
+                FirebaseEvent.event("clo_success", "detail", if (isUserBlock) "success" else "fail")
             }
 
             override fun onError(code: Int, error: String?) {
-
+                FirebaseEvent.event("clo_fail", "detail", if (error.isNullOrEmpty()) code.toString() else error )
             }
         })
     }
@@ -88,6 +102,7 @@ object StartupProvider {
             return
         }
 
+        FirebaseEvent.event("refe_start")
         try {
             val referrerClient = InstallReferrerClient.newBuilder(appIns).build()
             referrerClient.startConnection(object : InstallReferrerStateListener {
@@ -108,6 +123,7 @@ object StartupProvider {
                             AppCache.ins.referValue = referrerUrl
                             recognizeUser(referrerUrl)
                             referrerClient.endConnection()
+                            FirebaseEvent.event("refe_end", "result", if (isUserBuyer) "success" else "fail")
                             //NewUploaderImpl.doReferrer(referrerUrl, version, beginTime, serverClickTime)
                         }
                     }

@@ -67,6 +67,8 @@ class CreateResultActivity : BasePage() {
             override fun onLoadedAd(ad: BaseAd) {
                 if (ad !is TopNative) return
                 ad.showAd(this@CreateResultActivity, binding.nativeAdView, binding.nativeSelfRender.root)
+
+                AdsLoader.preloadAd(this@CreateResultActivity, AdPos.navResult)
             }
         })
     }

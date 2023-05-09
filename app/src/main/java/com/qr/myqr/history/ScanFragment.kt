@@ -63,6 +63,7 @@ class ScanFragment : BaseFragment() {
                 if (!ad.show(activityCtx)) {
                     nextDo.invoke()
                 }
+                AdsLoader.preloadAd(activityCtx, AdPos.insClick)
             }
 
             override fun onLoadErr(msg: String) {

@@ -71,6 +71,8 @@ class MainActivity : BasePage() {
                 if (!ad.show(this@MainActivity)) {
                     nextDo.invoke()
                 }
+
+                AdsLoader.preloadAd(this@MainActivity, AdPos.insHome)
             }
 
             override fun onLoadErr(msg: String) {

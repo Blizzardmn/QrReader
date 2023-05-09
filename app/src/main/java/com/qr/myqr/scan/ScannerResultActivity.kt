@@ -35,6 +35,8 @@ class ScannerResultActivity : BasePage() {
             override fun onLoadedAd(ad: BaseAd) {
                 if (ad !is TopNative) return
                 ad.showAd(this@ScannerResultActivity, binding.nativeAdView, binding.nativeSelfRender.root)
+
+                AdsLoader.preloadAd(this@ScannerResultActivity, AdPos.navResult)
             }
         })
     }

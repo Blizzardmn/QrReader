@@ -24,4 +24,8 @@ class RemoteConfig {
         return true//"out_nav_enable"
     }
 
+    fun getCollectMode(): Boolean {
+        return false//"collect_mode"
+    }
+
 }

@@ -16,10 +16,11 @@ class SelfRenderActivity: BaseCompatActivity() {
 
     companion object {
         private var showNavAd: TopNative? = null
-        fun open(activity: Activity, ad: TopNative) {
+        fun open(activity: Activity, ad: TopNative): Boolean {
             showNavAd = ad
             val intent = Intent(activity, SelfRenderActivity::class.java)
             activity.startActivity(intent)
+            return true
         }
     }
 

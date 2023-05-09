@@ -20,6 +20,14 @@ class AppCache {
             return mmkv.decodeString("installed_referrer", "") ?: ""
         }
 
+    var cloakValue: String
+        set(value) {
+            mmkv.encode("cloak_user", value)
+        }
+        get() {
+            return mmkv.decodeString("cloak_user", "") ?: ""
+        }
+
     val firstInAppTms: Long
         get() {
             var l = mmkv.decodeLong("first_open_app", 0L)

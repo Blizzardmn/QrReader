@@ -2,6 +2,7 @@ package com.qr.myqr.pop
 
 import com.qr.myqr.appIns
 import com.qr.myqr.data.AppCache
+import com.qr.myqr.data.FirebaseEvent
 import com.qr.myqr.data.OneDayCache
 import com.qr.myqr.data.RemoteConfig
 import com.qr.myqr.tools.NetUtils
@@ -22,6 +23,8 @@ object PopManager {
         if (appIns.isAppForeground()) return
         if (!NetUtils.isNetworkConnected()) return
         if (!isValid()) return
+
+        FirebaseEvent.event("out_req")
         MainScope().launch {
             MvpFbObj.cvd(appIns)
             delay(1200L)
