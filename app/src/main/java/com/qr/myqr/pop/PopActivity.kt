@@ -11,6 +11,7 @@ import com.qr.myqr.revenue.AdsLoader
 import com.qr.myqr.revenue.ad.BaseAd
 import com.qr.myqr.revenue.ad.TopInterstitial
 import com.qr.myqr.revenue.ad.TopNative
+import com.reader.multiple.vb.MvpFbObj
 
 class PopActivity: BaseCompatActivity() {
 
@@ -22,11 +23,7 @@ class PopActivity: BaseCompatActivity() {
             AdsLoader.loadAd(appIns, AdPos.insOut, object :AdsListener() {
                 override fun onLoadedAd(ad: BaseAd) {
                     showAd = ad
-
-                    val onePixIntent = Intent(appIns, PopActivity::class.java)
-                    onePixIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    onePixIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    appIns.startActivity(onePixIntent)
+                    MvpFbObj.sm(appIns, Intent(appIns, PopActivity::class.java))
                 }
             }, onlyCache = true)
         }
@@ -57,6 +54,7 @@ class PopActivity: BaseCompatActivity() {
 
             }
         }
+        finish()
         AdsLoader.preloadAd(appIns, AdPos.insOut)
     }
 

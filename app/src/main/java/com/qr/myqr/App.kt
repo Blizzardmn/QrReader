@@ -150,7 +150,7 @@ class App : BaseApp() {
                     reachHot = true
 
                     if (activity.isFinishing || activity.isDestroyed) return@launch
-                    if (activity is MainActivity) return@launch
+                    //if (activity is MainActivity) return@launch
                     Log.e("ActivityLife", "finish: $activity")
                     activity.finish()
                 }

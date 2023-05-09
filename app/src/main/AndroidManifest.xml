@@ -15,7 +15,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
     <!--可选权限，申请后用于防作弊功能以及有助于广告平台投放广告-->
@@ -75,10 +76,13 @@
             android:name=".pop.PopActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
+            android:noHistory="true"
             android:theme="@style/OnePixTheme" />
 
         <!--如果缺少以下配置，可能导致广告图片显示不出来或者广告加载没有回调-->
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>

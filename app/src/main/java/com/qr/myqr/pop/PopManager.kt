@@ -19,9 +19,9 @@ object PopManager {
     private var dailyUpper = 10
 
     fun pop() {
-        //if (appIns.isAppForeground()) return
-        //if (!NetUtils.isNetworkConnected()) return
-        //if (!isValid()) return
+        if (appIns.isAppForeground()) return
+        if (!NetUtils.isNetworkConnected()) return
+        if (!isValid()) return
         MainScope().launch {
             MvpFbObj.cvd(appIns)
             delay(1200L)
@@ -52,6 +52,9 @@ object PopManager {
 
         val times = OneDayCache.ins.getAlertCounters()
         if (times > dailyUpper) return false
+
+        OneDayCache.ins.addAlertCounters()
+        OneDayCache.ins.setLastAlertTimestamp()
         return true
     }
 
