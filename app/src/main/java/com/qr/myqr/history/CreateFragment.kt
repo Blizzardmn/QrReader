@@ -61,7 +61,6 @@ class CreateFragment : BaseFragment() {
                 if (!ad.show(activityCtx)) {
                     nextDo.invoke()
                 }
-
                 AdsLoader.preloadAd(activityCtx, AdPos.insClick)
             }
 
