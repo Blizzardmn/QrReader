@@ -25,7 +25,7 @@ class TopInterstitial(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adCon
     fun show(activity: Activity): Boolean {
         val interstitial = mInterstitial
         if (interstitial == null || !interstitial.checkAdStatus().isReady) return false
-        ATInterstitial.entryAdScenario(adConf.placementId, "")
+        ATInterstitial.entryAdScenario(adConf.placeId, "")
         interstitial.show(activity)
         return true
     }

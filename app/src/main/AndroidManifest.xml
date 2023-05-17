@@ -75,15 +75,18 @@
         <activity
             android:name=".pop.PopActivity"
             android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=":.pop"
             android:theme="@style/OnePixTheme" />
 
         <activity
             android:name=".pop.SelfRenderActivity"
             android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:noHistory="true"
+            android:taskAffinity=":.self"
             android:theme="@style/OnePixTheme" />
 
         <!--如果缺少以下配置，可能导致广告图片显示不出来或者广告加载没有回调-->

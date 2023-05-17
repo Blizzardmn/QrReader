@@ -37,6 +37,10 @@ class PopActivity: BaseCompatActivity() {
                 override fun onClicked() {
                     FirebaseEvent.event("out_ad_clk")
                 }
+
+                override fun onLoadErr(msg: String) {
+                    AdsLoader.preloadAd(appIns, AdPos.insOut)
+                }
             }, onlyCache = true)
         }
     }

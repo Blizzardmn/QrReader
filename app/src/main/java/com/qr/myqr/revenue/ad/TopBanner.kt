@@ -48,6 +48,7 @@ class TopBanner(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
 
         override fun onBannerClose(p0: ATAdInfo?) {
             unitAdClose.invoke()
+            (mBanner?.parent as? ViewGroup)?.removeView(mBanner)
         }
 
         override fun onBannerAutoRefreshed(p0: ATAdInfo?) {

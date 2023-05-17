@@ -57,7 +57,7 @@ open class DefaultConf {
                         idList.add(
                             AdConf(
                                 id = idJson.optString("id"),
-                                placementId = idJson.optString("place"),
+                                placeId = idJson.optString("place"),
                                 type = idJson.optString("type"),
                                 priority = idJson.optInt("priority")
                             )
@@ -76,7 +76,10 @@ open class DefaultConf {
         }
 
         private fun localAds(): String {
-            return """{
+            return testConf
+        }
+
+        private const val releaseConf = """{
     "open":[
         {
             "place":"f642f78eed0f6f",
@@ -192,6 +195,82 @@ open class DefaultConf {
         }
     ]
 }"""
+
+        private val testConf = """
+        {
+            "open":[
+                {
+                    "place":"",
+                    "id":"b62b035d8cb432",
+                    "type":"open",
+                    "priority":2
+                }
+            ],
+            "int_out":[
+                {
+                    "place":"",
+                    "id":"b62b014563dc89",
+                    "type":"ins",
+                    "priority":1
+                }
+            ],
+            "int_home":[
+                {
+                    "place":"",
+                    "id":"b62b014563dc89",
+                    "type":"ins",
+                    "priority":1
+                }
+            ],
+            "int_click":[
+                {
+                    "place":"",
+                    "id":"b62b014563dc89",
+                    "type":"ins",
+                    "priority":3
+                }
+            ],
+            "nav_create":[
+                {
+                    "place":"",
+                    "id":"b62fb58f6b79e7",
+                    "type":"nav",
+                    "priority":1
+                }
+            ],
+            "nav_result":[
+                {
+                    "place":"",
+                    "id":"b62fb58f6b79e7",
+                    "type":"nav",
+                    "priority":4
+                }
+            ],
+            "nav_out":[
+                {
+                    "place":"",
+                    "id":"b62fb58f6b79e7",
+                    "type":"nav",
+                    "priority":1
+                }
+            ],
+            "banner_main":[
+                {
+                    "place":"",
+                    "id":"b62b01a4cd4853",
+                    "type":"ban",
+                    "priority":1
+                }
+            ],
+            "banner_other":[
+                {
+                    "place":"",
+                    "id":"b62b01a4cd4853",
+                    "type":"ban",
+                    "priority":2
+                }
+            ]
         }
+    """.trimIndent()
     }
 }

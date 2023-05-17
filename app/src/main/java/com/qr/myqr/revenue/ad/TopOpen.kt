@@ -37,7 +37,7 @@ class TopOpen(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
 
         //建议进入可展示广告场景后调用entryAdScenario(placementId,scenarioId)统计当前广告位的缓存状态
         //scenario是指广告展示场景（非必传，可以直接传null）
-        ATSplashAd.entryAdScenario(adConf.placementId, "")
+        ATSplashAd.entryAdScenario(adConf.placeId, "")
         return if (mSplashAT?.isAdReady == true) {
             mSplashAT?.show(activity, container)
             true

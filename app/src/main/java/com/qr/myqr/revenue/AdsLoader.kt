@@ -102,8 +102,10 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
             return
         }
         if (!newLoad) {
-            synchronized(syncRequesting) {
-                if (syncRequesting[adPos] != null) return
+            if (adPos != AdPos.insOut || System.currentTimeMillis() - lastReqOutInsTs <= 50L) {
+                synchronized(syncRequesting) {
+                    if (syncRequesting[adPos] != null) return
+                }
             }
         }
         val configs = configByPos(adPos)
@@ -119,6 +121,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
     }
 
     private var topOnLoader: TopOnLoader? = null
+    private var lastReqOutInsTs = 0L
     private fun innerLoad(ctx: Context, @AdPos adPos: String, idList: ArrayList<AdConf>, adsListener: AdsListener) {
         if (idList.isNullOrEmpty()) {
             adsListener.onLoadErr()
@@ -126,7 +129,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         }
 
         val config = idList.removeAt(0)
-        val (_, type, _) = config
+        val (_, _, type, _) = config
         if (topOnLoader == null) topOnLoader = TopOnLoader()
         val loader = topOnLoader
 
@@ -150,6 +153,9 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
             adsListener.onLoadedAd(ad)
         }
 
+        if (adPos == AdPos.insOut) {
+            lastReqOutInsTs = System.currentTimeMillis()
+        }
         when (type) {
             "open" -> {
                 Log.i(adTag, "$adPos loadOpen: ${config.priority} ${config.id}")
