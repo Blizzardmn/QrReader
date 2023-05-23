@@ -91,9 +91,9 @@ class App : BaseApp() {
 
         val atInitConfigs = ArrayList<ATInitConfig>()
         //Mintegral
-        val mintegralATInitConfig = MintegralATInitConfig("207553", "b1e6051ecf82329ecc7ef8f4d3b61e67")
+        val mintegralATInitConfig = MintegralATInitConfig("213106", "b1e6051ecf82329ecc7ef8f4d3b61e67")
         //AdColony
-        val adColonyATInitConfig = AdColonyATInitConfig("642f8b765d27f77a780ea360", "712340cef020f434cb0b6f465ead185852d632f8")
+        val adColonyATInitConfig = AdColonyATInitConfig("app6fc6ed9b1b3f43199c", "vza7f081451a5848c5ab")
         //Pangle
         val pangleATInitConfig = PangleATInitConfig("8125510")
         //Vungle
