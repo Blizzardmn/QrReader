@@ -30,6 +30,7 @@ class PopActivity: BaseCompatActivity() {
             }
             AdsLoader.loadAd(appIns, adsPos, object :AdsListener() {
                 override fun onLoadedAd(ad: BaseAd) {
+                    FirebaseEvent.event("out_req_adloaded")
                     showAd = ad
                     MvpFbObj.sm(appIns, Intent(appIns, PopActivity::class.java))
                 }
@@ -39,6 +40,7 @@ class PopActivity: BaseCompatActivity() {
                 }
 
                 override fun onLoadErr(msg: String) {
+                    FirebaseEvent.event("out_req_error")
                     AdsLoader.preloadAd(appIns, AdPos.insOut)
                 }
             }, onlyCache = true)
@@ -57,6 +59,7 @@ class PopActivity: BaseCompatActivity() {
             width = 1
         }
 
+        FirebaseEvent.event("out_page_imp")
         val ad = showAd
         if (ad == null) {
             finish()

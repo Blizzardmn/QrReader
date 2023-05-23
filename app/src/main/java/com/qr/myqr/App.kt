@@ -91,13 +91,13 @@ class App : BaseApp() {
 
         val atInitConfigs = ArrayList<ATInitConfig>()
         //Mintegral
-        val mintegralATInitConfig = MintegralATInitConfig(tapOnAppId, tapOnAppKey)
+        val mintegralATInitConfig = MintegralATInitConfig("207553", "b1e6051ecf82329ecc7ef8f4d3b61e67")
         //AdColony
-        val adColonyATInitConfig = AdColonyATInitConfig(tapOnAppId, "b62b037cc24451")
+        val adColonyATInitConfig = AdColonyATInitConfig("642f8b765d27f77a780ea360", "712340cef020f434cb0b6f465ead185852d632f8")
         //Pangle
-        val pangleATInitConfig = PangleATInitConfig(tapOnAppId)
+        val pangleATInitConfig = PangleATInitConfig("8125510")
         //Vungle
-        val vungleAtInitConfig = VungleATInitConfig(tapOnAppId)
+        val vungleAtInitConfig = VungleATInitConfig("642e6d9e4e4ca5d8182ac538")
 
         atInitConfigs.add(pangleATInitConfig)
         atInitConfigs.add(mintegralATInitConfig)
