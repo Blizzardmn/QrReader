@@ -2,20 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/parent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/rect_ffffff_r8">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <com.anythink.nativead.api.ATNativeView
         android:id="@+id/native_ad_view"
         android:layout_width="match_parent"
-        android:layout_height="264dp"
-        android:layout_centerInParent="true"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginBottom="15dp">
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
 
         <include
             android:id="@+id/native_self_render"
-            layout="@layout/ad_native_self"
+            layout="@layout/ad_native_self_fullscreen"
             android:visibility="gone" />
     </com.anythink.nativead.api.ATNativeView>
 

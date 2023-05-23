@@ -35,7 +35,7 @@ class SelfRenderActivity: BaseCompatActivity() {
             return
         }
 
-        val params = window.attributes
+        /*val params = window.attributes
         window.setGravity(Gravity.CENTER)
        // params.width = (resources.displayMetrics.density * 330).toInt()
         params.apply {
@@ -45,7 +45,7 @@ class SelfRenderActivity: BaseCompatActivity() {
             alpha = 1f
             flags = WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
         }
-        window.attributes = params
+        window.attributes = params*/
         setFinishOnTouchOutside(false)
 
         ad.showAd(this, binding.nativeAdView, binding.nativeSelfRender.root)
