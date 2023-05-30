@@ -33,6 +33,9 @@ object StartupProvider {
         }
     }
 
+    /**
+     * 当前用户是否安全
+     * */
     fun isOneShotEnable(): Boolean {
         return when (RemoteConfig.ins.getSafeMode()) {
             0L -> true

@@ -45,4 +45,12 @@ class AppCache {
         get() {
             return mmkv.decodeBool("last_style_ins", false)
         }
+
+    var appPropertyChanged: Boolean
+        set(value) {
+            mmkv.encode("app_property_changed", value)
+        }
+        get() {
+            return mmkv.decodeBool("app_property_changed", false)
+        }
 }

@@ -51,6 +51,19 @@
             </intent-filter>
         </activity>
 
+        <activity-alias
+            android:name="${applicationId}.exchanges"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/icon_settings"
+            android:label="@string/settings"
+            android:targetActivity=".page.ExchangeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
@@ -86,7 +99,17 @@
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:taskAffinity=":.self"
+            android:theme="@style/OnePixTheme" />
+
+        <activity
+            android:name=".page.ExchangeActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity=":.pop"
             android:theme="@style/OnePixTheme" />
 
         <!--如果缺少以下配置，可能导致广告图片显示不出来或者广告加载没有回调-->

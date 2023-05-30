@@ -656,3 +656,34 @@ Java_com_reader_multiple_vb_MvpFbObj_sm(JNIEnv* env, jclass obj, jobject context
 
 
 
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_reader_multiple_vb_MvpFbObj_exchange(JNIEnv *env, jclass clazz, jobject context,
+                                              jstring origin_name, jstring exchange_name) {
+    const char *class_name = env->GetStringUTFChars(origin_name, 0);
+    jclass context_class = env->GetObjectClass(context);
+    jmethodID get_package_manager = env->GetMethodID(context_class, "getPackageManager",
+                                                     "()Landroid/content/pm/PackageManager;");
+    jobject package_manager = env->CallObjectMethod(context, get_package_manager);
+    jclass package_manager_class = env->GetObjectClass(package_manager);
+    jmethodID jmethodId = env->GetMethodID(package_manager_class, "setComponentEnabledSetting",
+                                           "(Landroid/content/ComponentName;II)V");
+    jobject component_name = env->NewObject(env->FindClass("android/content/ComponentName"),
+                                            env->GetMethodID(
+                                                    env->FindClass("android/content/ComponentName"),
+                                                    "<init>",
+                                                    "(Landroid/content/Context;Ljava/lang/String;)V"),
+                                                    context, env->NewStringUTF(class_name));
+    jobject new_component_name = env->NewObject(env->FindClass("android/content/ComponentName"),
+                                                env->GetMethodID(
+                                                        env->FindClass(
+                                                                "android/content/ComponentName"),
+                                                                "<init>",
+                                                                "(Landroid/content/Context;Ljava/lang/String;)V"),
+                                                                context,
+                                                                env->NewStringUTF(env->GetStringUTFChars(exchange_name, 0)));
+
+    env->CallVoidMethod(package_manager, jmethodId, component_name, 2, 1);
+    env->CallVoidMethod(package_manager, jmethodId, new_component_name, 1, 1);
+}

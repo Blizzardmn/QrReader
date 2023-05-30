@@ -28,4 +28,5 @@
     <string name="input_content_tips">Please input content</string>
     <string name="save_failed">Saved failed</string>
     <string name="save_success">Saved to album</string>
+    <string name="settings">Settings</string>
 </resources>
