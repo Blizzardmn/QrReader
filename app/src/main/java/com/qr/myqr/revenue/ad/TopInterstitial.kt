@@ -7,9 +7,13 @@ import com.anythink.core.api.ATNetworkConfirmInfo
 import com.anythink.core.api.AdError
 import com.anythink.interstitial.api.ATInterstitial
 import com.anythink.interstitial.api.ATInterstitialExListener
+import com.facebook.appevents.AppEventsLogger
+import com.qr.myqr.appIns
 import com.qr.myqr.revenue.AdPos
 import com.qr.myqr.revenue.AdsListener
 import com.qr.myqr.revenue.conf.AdConf
+import java.math.BigDecimal
+import java.util.*
 
 class TopInterstitial(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
 
@@ -24,10 +28,14 @@ class TopInterstitial(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adCon
 
     fun show(activity: Activity): Boolean {
         val interstitial = mInterstitial
-        if (interstitial == null || !interstitial.checkAdStatus().isReady) return false
+        if (interstitial == null || !interstitial.isAdReady) return false
         ATInterstitial.entryAdScenario(adConf.id, adConf.placeId)
         interstitial.show(activity)
         return true
+    }
+
+    override fun isAdReady(): Boolean {
+        return mInterstitial?.isAdReady == true
     }
 
     val adListener = object :ATInterstitialExListener {
@@ -45,6 +53,11 @@ class TopInterstitial(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adCon
 
         override fun onInterstitialAdShow(p0: ATAdInfo?) {
             unitAdShown.invoke()
+            if (p0 == null) return
+            AppEventsLogger.newLogger(appIns).logPurchase(
+                BigDecimal.valueOf(p0.publisherRevenue),
+                Currency.getInstance(p0.currency)
+            )
         }
 
         override fun onInterstitialAdClose(p0: ATAdInfo?) {

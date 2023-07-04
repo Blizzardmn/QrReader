@@ -11,9 +11,14 @@ import com.anythink.core.api.AdError
 import com.anythink.splashad.api.ATSplashAd
 import com.anythink.splashad.api.ATSplashAdExtraInfo
 import com.anythink.splashad.api.ATSplashExListener
+import com.facebook.appevents.AppEventsLogger
+import com.qr.myqr.appIns
 import com.qr.myqr.revenue.AdPos
 import com.qr.myqr.revenue.AdsListener
 import com.qr.myqr.revenue.conf.AdConf
+import java.math.BigDecimal
+import java.util.*
+import kotlin.collections.HashMap
 
 class TopOpen(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
 
@@ -64,6 +69,11 @@ class TopOpen(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
         override fun onAdShow(entity: ATAdInfo) {
             Log.i(tag, "onAdShow---------:$entity")
             unitAdShown.invoke()
+            //if (entity == null) return
+            AppEventsLogger.newLogger(appIns).logPurchase(
+                BigDecimal.valueOf(entity.publisherRevenue),
+                Currency.getInstance(entity.currency)
+            )
         }
 
         override fun onAdClick(entity: ATAdInfo) {

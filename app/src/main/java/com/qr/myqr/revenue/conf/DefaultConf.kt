@@ -76,7 +76,7 @@ open class DefaultConf {
         }
 
         private fun localAds(): String {
-            return testConf
+            return releaseConf
         }
 
         private const val releaseConf = """{
@@ -88,79 +88,33 @@ open class DefaultConf {
             "priority":2
         },
         {
-            "place":"f642fbcb2c8a58",
-            "id":"b642e6dd17d448",
+            "place":"f64940ef981b1f",
+            "id":"b64940e0b99f22",
             "type":"ins",
             "priority":1
         }
     ],
     "int_out":[
         {
-            "place":"f645496fd3c9ce",
-            "id":"b642e6dd17d448",
+            "place":"f64940f04a1bfb",
+            "id":"b64940e0b99f22",
             "type":"ins",
             "priority":1
         }
     ],
     "int_home":[
         {
-            "place":"f645498ceae570",
-            "id":"b642e6dd17d448",
+            "place":"f64940f0f5e637",
+            "id":"b64940e0b99f22",
             "type":"ins",
             "priority":1
         }
     ],
     "int_click":[
         {
-            "place":"f642fae562bc8f",
-            "id":"b642e6dd17d448",
+            "place":"f64940f19cfd04",
+            "id":"b64940e0b99f22",
             "type":"ins",
-            "priority":3
-        },
-        {
-            "place":"f642e6eaf11808",
-            "id":"b642e6dd17d448",
-            "type":"ins",
-            "priority":2
-        },
-        {
-            "place":"f6434c3736c1be",
-            "id":"b642e6dd17d448",
-            "type":"ins",
-            "priority":1
-        }
-    ],
-    "nav_create":[
-        {
-            "place":"f645495adceda0",
-            "id":"b642e69a09e4ed",
-            "type":"nav",
-            "priority":1
-        }
-    ],
-    "nav_result":[
-        {
-            "place":"f6434c04fd58db",
-            "id":"b642e69a09e4ed",
-            "type":"nav",
-            "priority":4
-        },
-        {
-            "place":"f6434bfe860624",
-            "id":"b642e69a09e4ed",
-            "type":"nav",
-            "priority":3
-        },
-        {
-            "place":"f6434c0c2c534e",
-            "id":"b642e69a09e4ed",
-            "type":"nav",
-            "priority":2
-        },
-        {
-            "place":"f6434c0abe7810",
-            "id":"b642e69a09e4ed",
-            "type":"nav",
             "priority":1
         }
     ],
@@ -169,28 +123,6 @@ open class DefaultConf {
             "place":"f645a0df8ad379",
             "id":"b642e69a09e4ed",
             "type":"nav",
-            "priority":1
-        }
-    ],
-    "banner_main":[
-        {
-            "place":"f642e6c2345bdb",
-            "id":"b642e69a03682e",
-            "type":"ban",
-            "priority":1
-        }
-    ],
-    "banner_other":[
-        {
-            "place":"f6434c13eb7298",
-            "id":"b642e69a03682e",
-            "type":"ban",
-            "priority":2
-        },
-        {
-            "place":"f6434c17ac5019",
-            "id":"b642e69a03682e",
-            "type":"ban",
             "priority":1
         }
     ]

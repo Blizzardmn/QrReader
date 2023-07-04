@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>key</key>
+        <value>value</value>
+    </entry>
+    <entry>
+        <key>safe_mode</key>
+        <value>2</value>
+    </entry>
+    <entry>
+        <key>out_nav_enable</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>online_block</key>
+        <value>true</value>
+    </entry>
+</defaultsMap>

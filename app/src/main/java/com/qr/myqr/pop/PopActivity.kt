@@ -1,8 +1,8 @@
 package com.qr.myqr.pop
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
+import android.view.WindowManager
 import com.qr.myqr.appIns
 import com.qr.myqr.basic.BaseCompatActivity
 import com.qr.myqr.data.AppCache
@@ -14,9 +14,8 @@ import com.qr.myqr.revenue.AdsLoader
 import com.qr.myqr.revenue.ad.BaseAd
 import com.qr.myqr.revenue.ad.TopInterstitial
 import com.qr.myqr.revenue.ad.TopNative
-import com.reader.multiple.vb.MvpFbObj
 
-class PopActivity: BaseCompatActivity() {
+open class PopActivity: BaseCompatActivity() {
 
     companion object {
 
@@ -28,53 +27,60 @@ class PopActivity: BaseCompatActivity() {
             } else {
                 AdPos.insOut
             }
-            AdsLoader.loadAd(appIns, adsPos, object :AdsListener() {
-                override fun onLoadedAd(ad: BaseAd) {
-                    FirebaseEvent.event("out_req_adloaded")
-                    showAd = ad
-                    MvpFbObj.sm(appIns, Intent(appIns, PopActivity::class.java))
-                }
-
-                override fun onClicked() {
-                    FirebaseEvent.event("out_ad_clk")
-                }
-
-                override fun onLoadErr(msg: String) {
-                    FirebaseEvent.event("out_req_error")
-                    AdsLoader.preloadAd(appIns, AdPos.insOut)
-                }
-            }, onlyCache = true)
+            showAd = null
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        overridePendingTransition(0, 0)
+        //overridePendingTransition(0, 0)
         //设定一像素的activity
-        window.setGravity(Gravity.START or Gravity.TOP)
-        window.attributes = window.attributes.apply {
-            x = 0
-            y = 0
-            height = 1
-            width = 1
+        window?.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
+            val params = attributes
+            params.height = 1
+            params.width = 1
+            params.gravity = Gravity.TOP
+            attributes = params
         }
 
         FirebaseEvent.event("out_page_imp")
-        val ad = showAd
-        if (ad == null) {
-            finish()
-            return
-        }
+        AdsLoader.loadAd(appIns, AdPos.insOut, object :AdsListener() {
+            override fun onLoadedAd(ad: BaseAd) {
+                FirebaseEvent.event("out_req_adloaded")
+                showAd(ad)
+            }
+
+            override fun onShown() {
+                FirebaseEvent.event("out_ad_imp_real")
+                finish()
+            }
+
+            override fun onDismiss() {
+                finish()
+            }
+
+            override fun onClicked() {
+                FirebaseEvent.event("out_ad_clk")
+            }
+
+            override fun onLoadErr(msg: String) {
+                finish()
+            }
+        }, onlyCache = true)
+    }
+
+    private fun showAd(ad: BaseAd) {
         var isIns = true
         val shown = when (ad) {
             is TopInterstitial -> {
                 AppCache.ins.lastAdInsStyle = true
-                ad.show(this)
+                ad.show(this@PopActivity)
             }
             is TopNative -> {
                 isIns = false
                 AppCache.ins.lastAdInsStyle = false
-                SelfRenderActivity.open(this, ad)
+                SelfRenderActivity.open(this@PopActivity, ad)
             }
 
             else -> false
@@ -87,12 +93,9 @@ class PopActivity: BaseCompatActivity() {
         if (shown) {
             FirebaseEvent.event("out_ad_imp")
         }
-        finish()
     }
 
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(0, 0)
+    override fun onBackPressed() {
     }
 
 

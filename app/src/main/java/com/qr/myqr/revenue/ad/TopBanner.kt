@@ -7,9 +7,13 @@ import com.anythink.banner.api.ATBannerView
 import com.anythink.core.api.ATAdInfo
 import com.anythink.core.api.ATNetworkConfirmInfo
 import com.anythink.core.api.AdError
+import com.facebook.appevents.AppEventsLogger
+import com.qr.myqr.appIns
 import com.qr.myqr.revenue.AdPos
 import com.qr.myqr.revenue.AdsListener
 import com.qr.myqr.revenue.conf.AdConf
+import java.math.BigDecimal
+import java.util.*
 
 class TopBanner(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
 
@@ -44,6 +48,11 @@ class TopBanner(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
 
         override fun onBannerShow(p0: ATAdInfo?) {
             unitAdShown.invoke()
+            if (p0 == null) return
+            AppEventsLogger.newLogger(appIns).logPurchase(
+                BigDecimal.valueOf(p0.publisherRevenue),
+                Currency.getInstance(p0.currency)
+            )
         }
 
         override fun onBannerClose(p0: ATAdInfo?) {

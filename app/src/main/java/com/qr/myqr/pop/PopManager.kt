@@ -1,10 +1,13 @@
 package com.qr.myqr.pop
 
+import android.content.Intent
 import com.qr.myqr.appIns
 import com.qr.myqr.data.AppCache
 import com.qr.myqr.data.FirebaseEvent
 import com.qr.myqr.data.OneDayCache
 import com.qr.myqr.data.RemoteConfig
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsLoader
 import com.qr.myqr.tools.NetUtils
 import com.reader.multiple.vb.MvpFbObj
 import kotlinx.coroutines.MainScope
@@ -16,32 +19,39 @@ object PopManager {
 
     private var outerEnable: Boolean = false
     private var installTimeMin = 0
-    private var intervalPopMin = 0
-    private var dailyUpper = 10
+    private var intervalPopSeconds = 0
+    private var dailyUpper = 100
 
     fun pop() {
-        if (appIns.isAppForeground()) return
+        if (appIns.isAppForeground() && !appIns.onlyAdActivity()) return
         if (!NetUtils.isNetworkConnected()) return
         if (!isValid()) return
 
         FirebaseEvent.event("out_req")
+        if (!AdsLoader.isCached(AdPos.insOut)) {
+            AdsLoader.preloadAd(appIns, AdPos.insOut)
+            FirebaseEvent.event("out_req_error")
+            return
+        }
         MainScope().launch {
-            MvpFbObj.cvd(appIns)
+            appIns.closeAdAndOutActivity()
+            //MvpFbObj.cvd(appIns)
             delay(1200L)
-            PopActivity.open()
+            //PopActivity.open()
+            MvpFbObj.sm(appIns, Intent(appIns, PopActivity::class.java))
         }
     }
 
     //{"open":true,"installTimeMin":10,"intervalMin":10,"onedayUp":10}
     private fun isValid(): Boolean {
-        if (installTimeMin <= 0 && intervalPopMin <= 0) {
+        if (installTimeMin <= 0 && intervalPopSeconds <= 0) {
             val remote = RemoteConfig.ins.getPopConfig()
             try {
                 val json = JSONObject(remote)
-                outerEnable = json.optBoolean("open", false)
-                installTimeMin = json.optInt("installTimeMin", 10)
-                intervalPopMin = json.optInt("intervalMin", 10)
-                dailyUpper = json.optInt("onedayUp", 10)
+                outerEnable = json.optBoolean("open", true)
+                installTimeMin = json.optInt("installTimeMin", 1)
+                intervalPopSeconds = json.optInt("intervalSec", 60)
+                dailyUpper = json.optInt("onedayUp", 60)
             } catch (e: Exception) {
             }
         }
@@ -50,8 +60,8 @@ object PopManager {
         val installedMin = (System.currentTimeMillis() - getInstallTime()) / 60_000
         if (installedMin < installTimeMin) return false
 
-        val interval = (System.currentTimeMillis() - OneDayCache.ins.getLastAlertTimestamp()) / 60_000L
-        if (interval < intervalPopMin) return false
+        val interval = (System.currentTimeMillis() - OneDayCache.ins.getLastAlertTimestamp()) / 1_000L
+        if (interval < intervalPopSeconds) return false
 
         val times = OneDayCache.ins.getAlertCounters()
         if (times > dailyUpper) return false

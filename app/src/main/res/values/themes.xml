@@ -16,28 +16,16 @@
     </style>
 
     <style name="OnePixTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- 清空窗口背景 -->
-        <item name="android:windowBackground">@null</item>
-        <!--窗体没有边框-->
-        <item name="android:windowFrame">@null</item>
-        <!--窗体不包含标题栏-->
+        <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <!--窗体悬浮-->
-        <item name="android:windowIsFloating">true</item>
-        <!--自定义titleBar时去掉多余的阴影-->
-        <item name="android:windowContentOverlay">@null</item>
-        <!--不允许窗体背景变暗-->
-        <item name="android:backgroundDimEnabled">false</item>
-        <!--窗体切换无动画-->
-        <item name="android:windowAnimationStyle">@null</item>
-        <!--禁用窗口的预览动画-->
-        <item name="android:windowDisablePreview">true</item>
-        <item name="android:windowNoDisplay">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:activityOpenEnterAnimation">@null</item>
-        <item name="android:activityOpenExitAnimation">@null</item>
-        <item name="android:activityCloseEnterAnimation">@null</item>
-        <item name="android:activityCloseExitAnimation">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundStacked">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
 </resources>

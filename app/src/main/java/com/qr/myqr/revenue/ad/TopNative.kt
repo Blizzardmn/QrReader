@@ -4,10 +4,14 @@ import android.app.Activity
 import android.view.View
 import com.anythink.core.api.ATAdInfo
 import com.anythink.nativead.api.*
+import com.facebook.appevents.AppEventsLogger
+import com.qr.myqr.appIns
 import com.qr.myqr.revenue.AdPos
 import com.qr.myqr.revenue.AdsListener
 import com.qr.myqr.revenue.SelfRenderViewUtil
 import com.qr.myqr.revenue.conf.AdConf
+import java.math.BigDecimal
+import java.util.*
 
 class TopNative(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
 
@@ -27,6 +31,11 @@ class TopNative(@AdPos adPos: String, adConf: AdConf): BaseAd(adPos, adConf) {
         nativeAd.setNativeEventListener(object :ATNativeEventExListener {
             override fun onAdImpressed(p0: ATNativeAdView?, p1: ATAdInfo?) {
                 unitAdShown.invoke()
+                if (p1 == null) return
+                AppEventsLogger.newLogger(appIns).logPurchase(
+                    BigDecimal.valueOf(p1.publisherRevenue),
+                    Currency.getInstance(p1.currency)
+                )
             }
 
             override fun onAdClicked(p0: ATNativeAdView?, p1: ATAdInfo?) {

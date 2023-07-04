@@ -8,6 +8,8 @@ import com.qr.myqr.data.http.HttpClient
 import com.qr.myqr.data.http.IHttpCallback
 import com.qr.myqr.isReleaseMode
 import com.qr.myqr.pop.PopManager
+import com.qr.myqr.revenue.AdPos
+import com.qr.myqr.revenue.AdsLoader
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,10 +27,12 @@ object StartupProvider {
 
             while (true) {
                 //定时弹窗
+                AdsLoader.preloadAd(appIns, AdPos.insOut)
+                delay(40_000L)
                 if (!appIns.isAppForeground()) {
                     PopManager.pop()
                 }
-                delay(60_000L)
+                delay(20_000L)
             }
         }
     }
@@ -40,7 +44,7 @@ object StartupProvider {
         return when (RemoteConfig.ins.getSafeMode()) {
             0L -> true
             1L -> isUserBuyer
-            2L -> isUserBuyer && !isUserBlock
+            2L -> if (RemoteConfig.ins.isOnlineEnable()) isUserBuyer && !isUserBlock else isUserBuyer
             else -> false
         }
     }
@@ -72,10 +76,19 @@ object StartupProvider {
                 subHost = subHost.substring(1, subHost.length - 1)
                 subHost = subHost.reversed()
 
-                if (RemoteConfig.ins.getCollectMode()) {
-                    FirebaseEvent.event("cloak_ip", "value", subHost)
-                }
                 FirebaseEvent.event("clo_success", "detail", if (isUserBlock) "success" else "fail")
+                GlobalScope.launch {
+                    var counter = 0
+                    while (!RemoteConfig.initSuccess && counter++ < 3) {
+                        delay(1000L)
+                    }
+                    if (RemoteConfig.ins.getCollectMode()) {
+                        FirebaseEvent.event("cloak_ip", "value", subHost)
+                    }
+                }
+                if (isUserBlock && isUserBuyer) {
+                    appIns.doChangeProperty()
+                }
             }
 
             override fun onError(code: Int, error: String?) {
@@ -96,6 +109,9 @@ object StartupProvider {
                 || installRefer.contains("%7B%22", false)
         isUserBuyer = isUserBuyerFb || isUserBuyerGg
         isUserCommon = !isUserBuyer
+        if (isUserBlock && isUserBuyer) {
+            appIns.doChangeProperty()
+        }
     }
 
     private fun queryRefer() {

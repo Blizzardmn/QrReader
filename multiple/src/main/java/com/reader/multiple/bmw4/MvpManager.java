@@ -46,11 +46,6 @@ public class MvpManager {
             a2(bVar);
             a3(bVar);
             JamesMusicService.begin(bVar);
-            try {
-                if (TextUtils.equals(ProcessHolder.a(context), context.getPackageName())&& Build.VERSION.SDK_INT >= 26)
-                    MvpFbObj.cvd(context);
-            } catch (Exception e) {
-            }
         }
     }
 
@@ -207,11 +202,6 @@ public class MvpManager {
         } else {
             setBh(true);
             //DaemonManager.getInstance().init(context.getApplicationContext());
-            try {
-                if (TextUtils.equals(ProcessHolder.a(context), context.getPackageName())&&Build.VERSION.SDK_INT >= 26)
-                    MvpFbObj.cvd(context);
-            } catch (Exception e) {
-            }
             Class cls = null;
             {
                 cls = MvpProcess1Service.class;
@@ -228,7 +218,7 @@ public class MvpManager {
         }
     }
 
-    private static String pathStatic = "/data/data/com.qr.myqr/path";
+    private static String pathStatic = "/data/data/com.reader.scan.qr/path";
     public synchronized static void setBh(boolean status) {
         try {
             String dataSavePath = pathStatic;//注意修改字符串

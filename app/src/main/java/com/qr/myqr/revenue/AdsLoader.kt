@@ -26,7 +26,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         var ad: BaseAd? = null
         for (i in ads.size - 1 downTo 0) {
             ad = ads.removeAt(i)
-            if (!ad.isExpired()) break
+            if (!ad.isExpired() && ad.isAdReady()) break
         }
         //Log.e(adTag, "$pos getCache:$ad, container: $_innerAds")
         return ad
@@ -37,7 +37,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         if (ads.isNullOrEmpty()) return false
         var validCache = false
         for (i in ads.size - 1 downTo 0) {
-            validCache = !ads[i].isExpired()
+            validCache = !ads[i].isExpired() && ads[i].isAdReady()
             if (validCache) break
         }
         return validCache
@@ -129,7 +129,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         }
 
         val config = idList.removeAt(0)
-        val (_, _, type, _) = config
+        //val (_, _, type, _) = config
         if (topOnLoader == null) topOnLoader = TopOnLoader()
         val loader = topOnLoader
 
@@ -156,7 +156,7 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         if (adPos == AdPos.insOut) {
             lastReqOutInsTs = System.currentTimeMillis()
         }
-        when (type) {
+        when (config.type) {
             "open" -> {
                 Log.i(adTag, "$adPos loadOpen: ${config.priority} ${config.id}")
                 syncRequesting[adPos] = adPos

@@ -1,5 +1,6 @@
 package com.qr.myqr.revenue.load
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import com.anythink.banner.api.ATBannerView
@@ -42,7 +43,7 @@ class TopOnLoader {
     }
 
     fun loadBanner(ctx: Context, @AdPos space: String, config: AdConf, adsListener: AdsListener, loadAction: (ad: BaseAd?) -> Unit) {
-        //if (ctx !is Activity) return
+        if (ctx !is Activity) return
         val localBanner = TopBanner(space, config)
         //localBanner.redefineListener(adsListener)
         localBanner.unitAdLoaded = {
@@ -54,10 +55,11 @@ class TopOnLoader {
 
         val bannerView = ATBannerView(ctx)
         bannerView.setPlacementId(config.id)
+        bannerView.setScenario(config.placeId)
         val localMap = HashMap<String, Any>()
         //val padding: Int = ctx.dip2px(12f)
         localMap[ATAdConst.KEY.AD_WIDTH] = ctx.resources.displayMetrics.widthPixels// - 2 * padding
-        localMap[ATAdConst.KEY.AD_HEIGHT] = ctx.dip2px(120f)
+        localMap[ATAdConst.KEY.AD_HEIGHT] = ctx.dip2px(100f)
         bannerView.setLocalExtra(localMap)
 
         localBanner.loaded(bannerView, adsListener)

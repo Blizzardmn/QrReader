@@ -15,7 +15,11 @@ open class BaseAd(@AdPos adPos: String, val adConf: AdConf) {
     }
 
     fun isExpired(): Boolean {
-        return (System.currentTimeMillis() - loadedTms) < 120 * 60 * 1000L
+        return (System.currentTimeMillis() - loadedTms) > 120 * 60 * 1000L
+    }
+
+    open fun isAdReady(): Boolean {
+        return true
     }
 
     fun redefineListener(adsListener: AdsListener) {

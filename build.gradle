@@ -6,6 +6,8 @@ buildscript {
         mavenCentral()
         jcenter()
         maven { url "https://www.jitpack.io" }
+        maven { url "https://maven.google.com" }
+        maven { url 'https://maven.singular.net/' }
     }
 
     dependencies {
@@ -16,8 +18,8 @@ buildscript {
         //classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.5.30"
         //classpath "org.mozilla.rust-android-gradle:plugin:0.9.0"
         // Add the following line:
-        //classpath 'com.google.gms:google-services:4.3.13'  // Google Services plugin
-        //classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.1'
+        classpath 'com.google.gms:google-services:4.3.13'  // Google Services plugin
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.1'
         //StringFog
         classpath 'com.github.megatronking.stringfog:gradle-plugin:4.0.0'
         // 选用加解密算法库，默认实现了xor算法，也可以使用自己的加解密库。
@@ -31,6 +33,7 @@ allprojects {
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
         maven { url "https://www.jitpack.io" }
+        maven { url 'https://maven.singular.net/' }
 
         flatDir { dirs 'libs' }
         //Anythink(Core)

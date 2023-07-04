@@ -16,6 +16,8 @@ import com.qr.myqr.revenue.AdsLoader
 import com.qr.myqr.revenue.ad.BaseAd
 import com.qr.myqr.revenue.ad.TopOpen
 import com.qr.myqr.toActivity
+import com.singular.sdk.Singular
+import com.singular.sdk.SingularConfig
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -27,10 +29,26 @@ class FirstActivity : BasePage() {
             val intent = Intent(activity, FirstActivity::class.java)
             activity.startActivity(intent)
         }
+
+        private var initSingular = false
+    }
+
+    private val app = "app"
+    private val words = "words_17"
+    private val prefix1 = "fe8ee"
+    private val end1 = "abebf"
+    private fun initSdk() {
+        if (initSingular) return
+        initSingular = true
+        val config = SingularConfig("${app}${words}b63dde", "${prefix1}864c9aaec0f1ca7e053af1${end1}")
+            //.withCustomUserId(UserId)
+            .withSessionTimeoutInSec(120)
+        Singular.init(applicationContext, config)
     }
 
     private var isAdImpression = false
     override fun initView() {
+        initSdk()
         val openNextLogic = {
             startMain()
         }

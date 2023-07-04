@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">QR Reader</string>
+    <string name="facebook_app_id">250220854156650</string>
+
     <string name="qr_reader">QR Reader</string>
     <string name="start_scan">Start Scan</string>
     <string name="result">Result</string>
