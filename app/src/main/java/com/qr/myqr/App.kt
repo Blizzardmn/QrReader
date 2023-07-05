@@ -198,8 +198,6 @@ class App : BaseApp() {
         override fun onActivityStopped(activity: Activity) {
             //loggerActivityLife("onActivityStopped: $activity")
             if (activity is PopActivity || activity is ExchangeActivity || activity is SelfRenderActivity) {
-                if (activity.isFinishing || activity.isDestroyed) return
-                activity.finish()
                 return
             }
             if (--nActivity <= 0) {

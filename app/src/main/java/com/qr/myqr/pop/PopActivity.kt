@@ -53,11 +53,11 @@ open class PopActivity: BaseCompatActivity() {
 
             override fun onShown() {
                 FirebaseEvent.event("out_ad_imp_real")
-                finish()
+                //finish()
             }
 
             override fun onDismiss() {
-                finish()
+                checkFinish()
             }
 
             override fun onClicked() {
@@ -65,6 +65,11 @@ open class PopActivity: BaseCompatActivity() {
             }
 
             override fun onLoadErr(msg: String) {
+                checkFinish()
+            }
+
+            private fun checkFinish() {
+                if (isFinishing || isDestroyed) return
                 finish()
             }
         }, onlyCache = true)
