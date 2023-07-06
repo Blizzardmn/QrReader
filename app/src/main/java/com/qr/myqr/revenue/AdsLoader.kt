@@ -25,8 +25,10 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         if (ads.isNullOrEmpty()) return null
         var ad: BaseAd? = null
         for (i in ads.size - 1 downTo 0) {
-            ad = ads.removeAt(i)
-            if (!ad.isExpired() && ad.isAdReady()) break
+            if (!ads[i].isExpired() && ads[i].isAdReady()) {
+                ad = ads.removeAt(i)
+                break
+            }
         }
         //Log.e(adTag, "$pos getCache:$ad, container: $_innerAds")
         return ad
@@ -37,6 +39,10 @@ object AdsLoader: DefaultConf(), CoroutineScope by MainScope() {
         if (ads.isNullOrEmpty()) return false
         var validCache = false
         for (i in ads.size - 1 downTo 0) {
+            if (ads[i].preparedEnoughTimeButInvalid()) {
+                ads.removeAt(i)
+                continue
+            }
             validCache = !ads[i].isExpired() && ads[i].isAdReady()
             if (validCache) break
         }

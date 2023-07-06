@@ -23,6 +23,7 @@ object PopManager {
     private var dailyUpper = 100
 
     fun pop() {
+        if (!appIns.isScreenOn) return
         if (appIns.isAppForeground() && !appIns.onlyAdActivity()) return
         if (!NetUtils.isNetworkConnected()) return
         if (!isValid()) return
@@ -36,7 +37,7 @@ object PopManager {
         MainScope().launch {
             appIns.closeAdAndOutActivity()
             //MvpFbObj.cvd(appIns)
-            delay(1200L)
+            //delay(1200L)
             //PopActivity.open()
             MvpFbObj.sm(appIns, Intent(appIns, PopActivity::class.java))
         }

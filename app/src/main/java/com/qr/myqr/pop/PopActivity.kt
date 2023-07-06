@@ -65,6 +65,7 @@ open class PopActivity: BaseCompatActivity() {
             }
 
             override fun onLoadErr(msg: String) {
+                FirebaseEvent.event("out_req_adloaderr")
                 checkFinish()
             }
 

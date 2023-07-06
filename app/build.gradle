@@ -29,8 +29,8 @@ android {
         applicationId "com.reader.scan.qr"
         minSdk 23
         targetSdk 33
-        versionCode 30
-        versionName "1.3.0"
+        versionCode 31
+        versionName "1.3.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "${rootProject.name}-v${versionName}-${versionCode}")

@@ -15,7 +15,11 @@ open class BaseAd(@AdPos adPos: String, val adConf: AdConf) {
     }
 
     fun isExpired(): Boolean {
-        return (System.currentTimeMillis() - loadedTms) > 120 * 60 * 1000L
+        return (System.currentTimeMillis() - loadedTms) > 60 * 60 * 1000L
+    }
+
+    fun preparedEnoughTimeButInvalid() :Boolean {
+        return !isAdReady() && (System.currentTimeMillis() - loadedTms) > 50 * 1000L
     }
 
     open fun isAdReady(): Boolean {

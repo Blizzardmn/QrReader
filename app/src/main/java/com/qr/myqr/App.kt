@@ -179,7 +179,7 @@ class App : BaseApp() {
             if (nActivity++ == 0) {
                 //ProtectService.activityCheckStartup()
 
-                if (reachHot) {
+                /*if (reachHot) {
                     if (blockOneHotLoad) {
                         blockOneHotLoad = false
                     } else {
@@ -191,7 +191,7 @@ class App : BaseApp() {
                         }
                     }
                 }
-                reachHot = false
+                reachHot = false*/
             }
         }
 
@@ -203,11 +203,11 @@ class App : BaseApp() {
             if (--nActivity <= 0) {
                 doChangeProperty()
 
-                reachHot = true
+                /*reachHot = true
                 if (activity.isFinishing || activity.isDestroyed) return
                 //if (activity is MainActivity) return@launch
                 Log.e("ActivityLife", "finish: $activity")
-                activity.finish()
+                activity.finish()*/
             }
         }
 
